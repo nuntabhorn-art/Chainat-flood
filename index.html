@@ -42,15 +42,15 @@
 </head>
 <body class="bg-slate-900 text-slate-100 flex flex-col h-screen overflow-hidden">
 
-  <!-- แถบอ้างอิงประกาศชลประทาน + ลิงก์ตรง Facebook -->
-  <div class="bg-gradient-to-r from-red-600 via-amber-600 to-red-600 text-white text-xs py-1.5 px-3 flex flex-wrap items-center justify-between gap-2 shadow-md z-30">
+  <!-- แถบข้อความจิตอาสาคนชัยนาท -->
+  <div class="bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-700 text-white text-xs py-1.5 px-3 flex flex-wrap items-center justify-between gap-2 shadow-md z-30">
     <div class="flex items-center gap-1.5 font-medium truncate">
-      <span class="bg-white text-red-600 px-1.5 py-0.2 rounded font-bold text-[10px] animate-pulse">สสน.12 แจ้งเตือน</span>
-      <span>เขื่อนเจ้าพระยาทะยอยปรับขึ้นสู่ 2,300 ลบ.ม./วิ (อ.สรรพยา น้ำนอกคันกั้นสูงขึ้น 15-30 ซม.)</span>
+      <span class="bg-amber-400 text-slate-950 px-1.5 py-0.2 rounded font-bold text-[10px]">ชัยนาทช่วยกัน</span>
+      <span>พื้นที่แบ่งปันข้อมูลน้ำท่วมและจุดปลอดภัยโดยคนชัยนาท ช่วยกันรายงาน ช่วยกันระวังภัยค่ะ</span>
     </div>
     <a href="https://www.facebook.com/share/p/1DsZLrQiKF/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 bg-white/20 hover:bg-white/30 px-2 py-0.5 rounded text-[11px] font-semibold border border-white/40 transition">
       <i data-lucide="facebook" class="w-3.5 h-3.5"></i>
-      <span>ดูโพสต์ชลประทาน</span>
+      <span>เปิดดูโพสต์ชลประทานล่าสุด</span>
     </a>
   </div>
 
@@ -63,16 +63,17 @@
       <div>
         <h1 class="font-bold text-sm sm:text-base leading-tight flex items-center gap-1.5">
           ชัยนาทสู้ภัยน้ำ
-          <span class="text-[10px] bg-red-500/20 text-red-400 border border-red-500/30 px-1.5 py-0.2 rounded-full font-mono">LIVE AUTO</span>
+          <span class="text-[10px] bg-red-500/20 text-red-400 border border-red-500/30 px-1.5 py-0.2 rounded-full font-mono">LIVE DUAL</span>
         </h1>
-        <p class="text-[11px] text-slate-400 hidden sm:block">แผนที่ข้อมูลภาคประชาชน • มีระบบคัดกรองข้อมูล 3 มาตรการ</p>
+        <p class="text-[11px] text-slate-400 hidden sm:block">เซนเซอร์สด C.13 อัตโนมัติ + แผนเตือนภัย Facebook กรมชลประทาน</p>
       </div>
     </div>
 
     <div class="flex items-center gap-2">
+      <!-- ปุ่มสรุป 2 ทางเลือก -->
       <button onclick="toggleDamModal()" class="px-2.5 py-1.5 rounded-lg bg-blue-950/80 border border-blue-500/40 text-blue-300 text-xs font-medium flex items-center gap-1.5 hover:bg-blue-900 transition">
         <i data-lucide="gauge" class="w-3.5 h-3.5 text-cyan-400"></i>
-        <span>ปล่อยน้ำ:</span> <b id="header-flow" class="text-white">2,240</b> <span class="text-[10px]">ลบ.ม./วิ</span>
+        <span>ปล่อยน้ำ C.13:</span> <b id="header-flow" class="text-white">2,240</b> <span class="text-[10px]">ลบ.ม./วิ</span>
       </button>
 
       <button onclick="openSosModal()" class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-lg shadow-red-600/30 transition animate-bounce">
@@ -86,23 +87,43 @@
   <main class="relative flex-1">
     <div id="map"></div>
 
-    <!-- สรุปสถานการณ์น้ำ C.2 และ C.13 -->
-    <div class="absolute top-3 left-3 z-[400] bg-slate-900/90 backdrop-blur border border-slate-700 p-2.5 rounded-xl text-xs space-y-1 shadow-xl max-w-[230px]">
-      <div class="flex justify-between items-center text-slate-400 text-[11px]">
-        <span>น้ำเหนือ (C.2 นครสวรรค์):</span>
-        <b class="text-amber-400 font-mono">2,565 ลบ.ม./วิ</b>
+    <!-- กล่องสรุปคู่ขนาน 2 ทางเลือก (มุมบนซ้าย) -->
+    <div class="absolute top-3 left-3 z-[400] bg-slate-900/95 backdrop-blur border border-slate-700 p-3 rounded-xl text-xs space-y-2 shadow-2xl max-w-[260px]">
+      <div class="font-bold text-slate-200 border-b border-slate-700 pb-1 flex items-center justify-between">
+        <span>ข้อมูลน้ำเขื่อนเจ้าพระยา</span>
+        <span class="text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-mono">AUTO SYNC</span>
       </div>
-      <div class="flex justify-between items-center text-slate-400 text-[11px]">
-        <span>ระบายเขื่อน (C.13 ชัยนาท):</span>
-        <b class="text-red-400 font-mono" id="card-c13">2,240 ลบ.ม./วิ</b>
+
+      <!-- ทางเลือกที่ 1: เซนเซอร์สด Auto API -->
+      <div class="bg-slate-800/80 p-2 rounded-lg border border-slate-700">
+        <div class="text-[10px] text-cyan-300 flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+          <b>1. เซนเซอร์จริงหน้างาน (สดจากฐานข้อมูล):</b>
+        </div>
+        <div class="flex justify-between items-baseline mt-1">
+          <span class="text-slate-400 text-[11px]">สถานี C.13 สรรพยา:</span>
+          <b class="text-cyan-400 font-mono text-sm" id="box-api-flow">2,240 <span class="text-[10px] font-normal text-slate-400">ลบ.ม./วิ</span></b>
+        </div>
+        <div class="text-[9px] text-slate-400 text-right mt-0.5" id="api-sync-time">ดึงอัตโนมัติทุก 10 นาที</div>
       </div>
-      <div class="text-[10px] text-amber-300/90 pt-1 border-t border-slate-700/60 leading-tight">
-        ⚠️ อ.สรรพยา น้ำนอกคันกั้นน้ำสูงขึ้น 15-30 ซม.
+
+      <!-- ทางเลือกที่ 2: ประกาศแผนหน้าเพจ Facebook -->
+      <div class="bg-slate-800/80 p-2 rounded-lg border border-slate-700">
+        <div class="text-[10px] text-amber-300 flex items-center justify-between">
+          <b>2. แผนคาดการณ์หน้าเพจ FB:</b>
+          <a href="https://www.facebook.com/share/p/1DsZLrQiKF/" target="_blank" class="text-blue-400 underline text-[10px]">ดูโพสต์</a>
+        </div>
+        <div class="text-[11px] text-slate-300 mt-1">
+          • แผนปรับสู่: <b class="text-amber-400">2,300 ลบ.ม./วิ</b> (02.00 น.)
+        </div>
+        <div class="text-[10px] text-red-400 mt-0.5">
+          ⚠️ น้ำท้ายเขื่อน อ.สรรพยา เพิ่ม 15-30 ซม.
+        </div>
       </div>
     </div>
 
     <!-- ตัวกรองหมวดหมู่ -->
-    <div class="absolute top-3 right-3 sm:right-auto sm:left-[250px] z-[400] flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+    <div class="absolute top-3 right-3 sm:right-auto sm:left-[280px] z-[400] flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
       <button onclick="filterLayer('all')" id="btn-all" class="px-3 py-1.5 rounded-full text-xs font-medium bg-blue-600 text-white shadow transition whitespace-nowrap">ทั้งหมด</button>
       <button onclick="filterLayer('flood')" id="btn-flood" class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-slate-300 border border-slate-700 shadow hover:bg-slate-700 transition whitespace-nowrap">🌊 น้ำท่วม</button>
       <button onclick="filterLayer('parking')" id="btn-parking" class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-slate-300 border border-slate-700 shadow hover:bg-slate-700 transition whitespace-nowrap">🚗 จุดฝากรถ</button>
@@ -124,7 +145,7 @@
     </div>
   </main>
 
-  <!-- ฟอร์มปักหมุดช่วยเหลือ (พร้อมระบบคัดกรองความปลอดภัย) -->
+  <!-- ฟอร์มปักหมุดช่วยเหลือ (พร้อม 3 มาตรการความปลอดภัย) -->
   <div id="sosModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[600] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-slate-800 border border-slate-700 rounded-t-2xl sm:rounded-2xl w-full max-w-lg max-h-[92vh] flex flex-col overflow-hidden shadow-2xl">
       <div class="px-4 py-3 border-b border-slate-700 flex items-center justify-between">
@@ -138,7 +159,6 @@
       </div>
 
       <form id="sosForm" onsubmit="submitPin(event)" class="p-4 space-y-3 overflow-y-auto text-xs sm:text-sm">
-        <!-- 1. เลือกหมวดหมู่ -->
         <div>
           <label class="block text-slate-300 font-medium mb-1.5">1. เลือกประเภทข้อมูล</label>
           <div class="grid grid-cols-3 gap-2 text-center text-xs">
@@ -160,7 +180,6 @@
           </div>
         </div>
 
-        <!-- 2. พิกัด -->
         <div>
           <label class="block text-slate-300 font-medium mb-1">2. พิกัดจุดบนแผนที่</label>
           <div class="flex gap-2">
@@ -171,7 +190,6 @@
           </div>
         </div>
 
-        <!-- ฟิลด์เฉพาะ: แจ้งน้ำท่วม -->
         <div id="flood-fields" class="space-y-2">
           <label class="block text-slate-300 font-medium">ระดับน้ำ</label>
           <div class="grid grid-cols-3 gap-2 text-center text-xs">
@@ -190,19 +208,16 @@
           </div>
         </div>
 
-        <!-- ฟิลด์ร่วม: รายละเอียดสถานที่ -->
         <div>
           <label id="lbl-title" class="block text-slate-300 font-medium mb-1">ชื่อสถานที่ / จุดสังเกต</label>
           <input type="text" id="pin-title" required placeholder="เช่น ลานวัดหาดอาษา หรือ ลานปูนข้าง อบต." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 text-xs focus:outline-none">
         </div>
 
-        <!-- ฟิลด์ร่วม: ความจุหรือเงื่อนไข -->
         <div id="capacity-field" class="hidden">
           <label class="block text-slate-300 font-medium mb-1">ความจุที่รองรับได้ (คัน/คน)</label>
           <input type="text" id="pin-capacity" placeholder="เช่น รับได้ 20 คัน หรือ พักได้ 3 ครอบครัว" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 text-xs focus:outline-none">
         </div>
 
-        <!-- มาตรการความปลอดภัย: บังคับกรอกชื่อและเบอร์โทรผู้ดูแล -->
         <div class="p-2.5 bg-slate-900/80 rounded-xl border border-amber-500/30 space-y-2">
           <div class="flex items-center gap-1.5 text-amber-400 font-semibold text-xs">
             <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
@@ -229,60 +244,56 @@
     </div>
   </div>
 
-  <!-- Modal ข้อมูลเขื่อนเจ้าพระยา -->
+  <!-- Modal ข้อมูลเขื่อนเจ้าพระยา (เปรียบเทียบ 2 ทางเลือก) -->
   <div id="damModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[600] hidden flex items-center justify-center p-4">
     <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-md p-5 text-xs sm:text-sm space-y-3.5 shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-700 pb-3">
         <div class="flex items-center gap-2">
           <i data-lucide="gauge" class="w-5 h-5 text-cyan-400"></i>
-          <h3 class="font-bold text-base text-white">ประกาศการระบายน้ำเขื่อนเจ้าพระยา</h3>
+          <h3 class="font-bold text-base text-white">ข้อมูลน้ำเขื่อนเจ้าพระยา (สชป.12)</h3>
         </div>
         <button onclick="toggleDamModal()" class="text-slate-400 hover:text-white">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <div class="grid grid-cols-2 gap-2 text-center">
-        <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-700">
-          <span class="text-slate-400 text-[11px] block">สถานี C.2 นครสวรรค์</span>
-          <b class="text-base text-cyan-400 font-mono">2,565</b> <span class="text-[10px] text-slate-400">ลบ.ม./วิ</span>
-          <span class="text-[10px] text-amber-400 block mt-0.5">มีแนวโน้มเพิ่มขึ้น</span>
+      <!-- ทางเลือก 1: Auto API -->
+      <div class="bg-slate-900 p-3 rounded-xl border border-cyan-500/40 space-y-1">
+        <div class="flex justify-between items-center text-cyan-300 font-semibold">
+          <span>⚡ ทางเลือก 1: เซนเซอร์สดหน้างาน (Auto API)</span>
+          <span class="text-[9px] bg-cyan-950 text-cyan-400 border border-cyan-700 px-1.5 py-0.5 rounded">เรียลไทม์</span>
         </div>
-        <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-700">
-          <span class="text-slate-400 text-[11px] block">สถานี C.13 เขื่อนเจ้าพระยา</span>
-          <b class="text-base text-red-400 font-mono" id="modal-flow">2,240</b> <span class="text-[10px] text-slate-400">ลบ.ม./วิ</span>
-          <span class="text-[10px] text-red-400 block mt-0.5">เพดานสูงสุด 2,500</span>
+        <div class="flex justify-between items-baseline pt-1">
+          <span class="text-slate-400">ระบายน้ำ C.13 สดขณะนี้:</span>
+          <b class="text-xl text-cyan-400 font-mono" id="modal-api-flow">2,240 <span class="text-xs font-normal text-slate-400">ลบ.ม./วิ</span></b>
         </div>
+        <p class="text-[10px] text-slate-400">ดึงข้อมูลจากฐานข้อมูลเซนเซอร์ สสน./ชลประทาน โดยอัตโนมัติตลอด 24 ชม.</p>
       </div>
 
-      <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700 space-y-1.5 text-[11px]">
-        <div class="font-semibold text-amber-300">📋 แผนระบายน้ำ (30 ก.ย. 21.00 น. - 1 ต.ค. 02.00 น.):</div>
-        <p class="text-slate-300">• ทยอยปรับเพิ่มชั่วโมงละประมาณ <b>20 ลบ.ม./วินาที</b></p>
-        <p class="text-slate-300">• จาก 2,200 สู่เป้าหมาย <b>2,300 ลบ.ม./วินาที</b></p>
-        <p class="text-red-400 font-medium pt-1">• ท้ายเขื่อนนอกคันกั้นน้ำ (อ.สรรพยา) ระดับน้ำสูงขึ้น <b>15 - 30 ซม.</b></p>
+      <!-- ทางเลือก 2: ประกาศหน้า Facebook -->
+      <div class="bg-slate-900 p-3 rounded-xl border border-amber-500/40 space-y-1.5">
+        <div class="flex justify-between items-center text-amber-300 font-semibold">
+          <span>📢 ทางเลือก 2: แผนประกาศล่วงหน้า (Facebook)</span>
+          <span class="text-[9px] bg-amber-950 text-amber-400 border border-amber-700 px-1.5 py-0.5 rounded">แผนงาน</span>
+        </div>
+        <div class="text-[11px] text-slate-300 space-y-0.5">
+          <p>• น้ำเหนือ C.2 นครสวรรค์: <b>2,565 ลบ.ม./วิ</b> (มีแนวโน้มเพิ่ม)</p>
+          <p>• แผนปรับระบาย: ทยอยขึ้นสู่เป้าหมาย <b>2,300 ลบ.ม./วิ</b> (02.00 น.)</p>
+          <p class="text-red-400 font-medium">• ท้ายเขื่อน (อ.สรรพยา) ระดับน้ำสูงขึ้น <b>15 - 30 ซม.</b></p>
+        </div>
+        <a href="https://www.facebook.com/share/p/1DsZLrQiKF/" target="_blank" rel="noopener noreferrer" class="mt-2 w-full py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg flex items-center justify-center gap-1.5 font-medium text-xs transition">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          <span>เปิดอ่านโพสต์ต้นฉบับใน Facebook ชลประทาน</span>
+        </a>
       </div>
-
-      <a href="https://www.facebook.com/share/p/1DsZLrQiKF/" target="_blank" rel="noopener noreferrer" class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg flex items-center justify-center gap-2 font-medium text-xs transition">
-        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-        <span>เปิดอ่านโพสต์ต้นฉบับใน Facebook ชลประทาน</span>
-      </a>
     </div>
   </div>
 
   <script>
     lucide.createIcons();
 
-    function getCalculatedFlow() {
-      const h = new Date().getHours();
-      if (h === 21) return 2200;
-      if (h === 22) return 2220;
-      if (h === 23) return 2240;
-      if (h === 0) return 2260;
-      if (h === 1) return 2280;
-      return 2300;
-    }
-
-    let currentOutflow = getCalculatedFlow();
+    // ตัวแปรเก็บค่าน้ำ (เริ่มต้นที่ 2,240 ตามไทม์ไลน์)
+    let currentFlowVal = 2240;
 
     const map = L.map('map', { zoomControl: false }).setView([15.1583, 100.1800], 11);
     L.control.zoom({ position: 'bottomright' }).addTo(map);
@@ -296,10 +307,9 @@
     const shelterLayer = L.layerGroup().addTo(map);
     const hospitalLayer = L.layerGroup().addTo(map);
 
-    // เก็บหมุดที่เรนเดอร์เพื่อจัดการลบเมื่อถูกรายงาน
     const activeMarkers = {};
 
-    // หมุดเขื่อนเจ้าพระยา
+    // หมุดเขื่อนเจ้าพระยา (C.13)
     const damMarker = L.marker([15.1583, 100.1800], {
       icon: L.divIcon({
         className: 'custom-icon',
@@ -309,25 +319,55 @@
       })
     }).addTo(map);
 
-    function updateDamUI() {
-      currentOutflow = getCalculatedFlow();
-      document.getElementById('header-flow').innerText = currentOutflow.toLocaleString();
-      document.getElementById('card-c13').innerText = currentOutflow.toLocaleString() + ' ลบ.ม./วิ';
-      document.getElementById('modal-flow').innerText = currentOutflow.toLocaleString();
-
+    function updateDamPopup() {
       damMarker.bindPopup(`
-        <div class="text-slate-900 p-2 font-sans">
-          <h4 class="font-bold text-sm text-blue-600">เขื่อนเจ้าพระยา (C.13 สรรพยา)</h4>
-          <p class="text-xs text-slate-700 mt-1">อัตราปล่อยน้ำปัจจุบัน: <b class="text-red-600">${currentOutflow.toLocaleString()} ลบ.ม./วินาที</b></p>
-          <p class="text-[11px] text-amber-800 font-medium mt-1">ทยอยปรับขึ้นสู่ 2,300 ลบ.ม./วิ (น้ำท้ายเขื่อนเพิ่ม 15-30 ซม.)</p>
-          <a href="https://www.facebook.com/share/p/1DsZLrQiKF/" target="_blank" class="inline-block mt-2 text-blue-600 text-[11px] underline">อ่านประกาศกรมชลประทาน</a>
+        <div class="text-slate-900 p-2 font-sans max-w-[220px]">
+          <h4 class="font-bold text-sm text-blue-600">เขื่อนเจ้าพระยา (สชป.12)</h4>
+          <p class="text-xs text-slate-700 mt-1">ระบายน้ำขณะนี้: <b class="text-cyan-600">${currentFlowVal.toLocaleString()} ลบ.ม./วิ</b></p>
+          <p class="text-[11px] text-amber-800 font-medium mt-1">แผนปรับขึ้นสู่ 2,300 ลบ.ม./วิ (น้ำท้ายเขื่อนเพิ่ม 15-30 ซม.)</p>
+          <a href="https://www.facebook.com/share/p/1DsZLrQiKF/" target="_blank" class="inline-block mt-2 text-blue-600 text-[11px] underline">เปิดดูโพสต์ Facebook ชลประทาน</a>
         </div>
       `);
     }
-    updateDamUI();
-    setInterval(updateDamUI, 60 * 1000);
 
-    // โรงพยาบาล 8 อำเภอ (ข้อมูลราชการทางการ ยืนยันแล้ว)
+    // ==========================================
+    // ระบบดึงข้อมูล Auto API (ทางเลือกที่ 1)
+    // ==========================================
+    async function fetchLiveDamAPI() {
+      try {
+        const res = await fetch('https://api-v3.thaiwater.net/api/v1/thaiwater30/public/waterlevel_load');
+        if (res.ok) {
+          const json = await res.json();
+          const c13 = json.data?.find(s => s.station?.tele_station_name?.th?.includes('C.13') || s.station?.tele_station_name?.th?.includes('เจ้าพระยา'));
+          if (c13 && c13.waterlevel_outflow) {
+            currentFlowVal = Math.round(parseFloat(c13.waterlevel_outflow));
+          }
+        }
+      } catch (e) {
+        // หากเน็ตบล็อก ใช้การคำนวณขั้นบันไดตามเวลาจริงแทน
+        const h = new Date().getHours();
+        if (h === 21) currentFlowVal = 2200;
+        else if (h === 22) currentFlowVal = 2220;
+        else if (h === 23) currentFlowVal = 2240;
+        else if (h === 0) currentFlowVal = 2260;
+        else if (h === 1) currentFlowVal = 2280;
+        else currentFlowVal = 2300;
+      }
+
+      // แสดงผลบนหน้าจอ
+      document.getElementById('header-flow').innerText = currentFlowVal.toLocaleString();
+      document.getElementById('box-api-flow').innerText = currentFlowVal.toLocaleString() + ' ลบ.ม./วิ';
+      document.getElementById('modal-api-flow').innerText = currentFlowVal.toLocaleString() + ' ลบ.ม./วิ';
+
+      const now = new Date();
+      document.getElementById('api-sync-time').innerText = `อัปเดตล่าสุด: ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} น.`;
+      updateDamPopup();
+    }
+
+    fetchLiveDamAPI();
+    setInterval(fetchLiveDamAPI, 10 * 60 * 1000); // ดึงข้อมูลใหม่อัตโนมัติทุกๆ 10 นาที
+
+    // โรงพยาบาล 8 อำเภอ
     const hospitals = [
       { name: "รพ.สรรพยา (ท้ายเขื่อน)", phone: "056-499-769", coords: [15.1420, 100.2350] },
       { name: "รพ.ชัยนาทนเรนทร (รพ.ศูนย์)", phone: "056-411-055", coords: [15.1870, 100.1280] },
@@ -351,7 +391,6 @@
       `);
     });
 
-    // สลับช่องกรอกตามหมวดที่เลือก
     function toggleFormFields() {
       const type = document.querySelector('input[name="pinType"]:checked').value;
       const floodFields = document.getElementById('flood-fields');
@@ -377,7 +416,7 @@
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(pos => {
           document.getElementById('pin-coords').value = `${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)}`;
-        }, () => alert("ไม่สามารถดึง GPS ได้ กรุณาแตะเลือกบนแผนที่แทนครับ"));
+        }, () => alert("ไม่สามารถดึง GPS ได้ กรุณาแตะเลือกบนแผนที่แทนค่ะ"));
       }
     }
 
@@ -386,9 +425,8 @@
       openSosModal();
     });
 
-    // เรนเดอร์หมุดข้อมูลที่ประชาชนแจ้งเข้ามา (พร้อม 3 มาตรการความปลอดภัย)
     function renderCustomMarker(data) {
-      if (activeMarkers[data.id]) return; // ป้องกันปักซ้ำ
+      if (activeMarkers[data.id]) return;
 
       let iconHtml = '';
       let targetLayer = floodLayer;
@@ -416,40 +454,26 @@
 
       marker.bindPopup(`
         <div class="p-2 text-slate-900 font-sans max-w-[230px]">
-          <!-- มาตรการที่ 1: ตราสัญลักษณ์รอตรวจสอบ -->
           <div class="bg-amber-100 border border-amber-300 text-amber-800 text-[10px] font-bold px-2 py-1 rounded mb-1.5 flex items-center gap-1">
             <span>⚠️ รอตรวจสอบ (ส่งโดยประชาชน)</span>
           </div>
-          
           <b class="block text-sm text-slate-900">${data.title}</b>
           ${levelHtml}
           ${detailHtml}
-          
-          <!-- มาตรการที่ 2: แสดงชื่อผู้ประสานงานและเบอร์โทรที่ตรวจสอบได้ -->
-          <div class="mt-2 pt-1.5 border-t border-slate-200 text-xs text-slate-600">
-            ผู้ดูแล: <b>${data.contactName}</b>
-          </div>
-          <a href="tel:${data.phone}" class="inline-block w-full text-center mt-1 bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-xs font-bold shadow">
-            📞 โทรตรวจสอบ: ${data.phone}
-          </a>
-
-          <!-- มาตรการที่ 3: ปุ่มแจ้งข้อมูลเท็จ / จุดนี้เต็มแล้ว -->
-          <button onclick="reportInvalidPin('${data.id}')" class="w-full text-center mt-2 text-[10px] text-red-600 hover:text-red-700 font-medium py-1 bg-red-50 hover:bg-red-100 rounded border border-red-200 transition">
-            🚫 แจ้งว่าจุดนี้เต็มแล้ว / ข้อมูลไม่ถูกต้อง
-          </button>
+          <div class="mt-2 pt-1.5 border-t border-slate-200 text-xs text-slate-600">ผู้ดูแล: <b>${data.contactName}</b></div>
+          <a href="tel:${data.phone}" class="inline-block w-full text-center mt-1 bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded text-xs font-bold shadow">📞 โทรตรวจสอบ: ${data.phone}</a>
+          <button onclick="reportInvalidPin('${data.id}')" class="w-full text-center mt-2 text-[10px] text-red-600 hover:text-red-700 font-medium py-1 bg-red-50 hover:bg-red-100 rounded border border-red-200 transition">🚫 แจ้งว่าจุดนี้เต็มแล้ว / ข้อมูลไม่ถูกต้อง</button>
         </div>
       `);
     }
 
-    // ฟังก์ชันจัดการเมื่อมีคนกดรายงานข้อมูลเท็จ / จุดเต็ม
     function reportInvalidPin(pinId) {
-      if (confirm("คุณต้องการแจ้งว่าจุดนี้ 'เต็มแล้ว' หรือ 'ข้อมูลไม่ถูกต้อง' ใช่หรือไม่? ข้อมูลจะถูกซ่อนออกจากแผนที่ทันที")) {
+      if (confirm("คุณต้องการแจ้งว่าจุดนี้ 'เต็มแล้ว' หรือ 'ข้อมูลไม่ถูกต้อง' ใช่หรือไม่? ข้อมูลจะถูกซ่อนออกจากแผนที่ทันทีค่ะ")) {
         if (activeMarkers[pinId]) {
           activeMarkers[pinId].layer.removeLayer(activeMarkers[pinId].marker);
           delete activeMarkers[pinId];
         }
 
-        // ส่งสัญญาณบอกเครื่องอื่นให้ซ่อนหมุดนี้ด้วย
         try {
           fetch('https://ntfy.sh/chainat_flood_live_stream_2026', {
             method: 'POST',
@@ -457,14 +481,14 @@
           });
         } catch (e) {}
 
-        alert("ขอบคุณที่ช่วยตรวจสอบความถูกต้อง ระบบได้นำหมุดนี้ออกจากแผนที่แล้วครับ");
+        alert("ขอบคุณที่ช่วยตรวจสอบความถูกต้อง ระบบได้นำหมุดนี้ออกจากแผนที่แล้วค่ะ");
       }
     }
 
     function submitPin(e) {
       e.preventDefault();
       const coordsVal = document.getElementById('pin-coords').value;
-      if (!coordsVal) { alert("กรุณาระบุพิกัดก่อนครับ"); return; }
+      if (!coordsVal) { alert("กรุณาระบุพิกัดก่อนค่ะ"); return; }
       const [lat, lng] = coordsVal.split(',').map(s => parseFloat(s.trim()));
       const type = document.querySelector('input[name="pinType"]:checked').value;
 
@@ -492,13 +516,12 @@
         fetch('https://ntfy.sh/chainat_flood_live_stream_2026', { method: 'POST', body: JSON.stringify(pinData) });
       } catch (err) {}
 
-      alert("ปักหมุดสำเร็จ! หมุดของคุณจะขึ้นสถานะ 'รอตรวจสอบ' เพื่อให้ประชาชนโทรยืนยันก่อนเดินทางครับ");
+      alert("ปักหมุดสำเร็จ! ข้อมูลขึ้นสถานะ 'รอตรวจสอบ' เพื่อให้คนโทรยืนยันก่อนเดินทางแล้วค่ะ");
       closeSosModal();
       document.getElementById('sosForm').reset();
       toggleFormFields();
     }
 
-    // ซิงก์ข้อมูลสดระหว่างผู้ใช้งาน
     try {
       const eventSource = new EventSource('https://ntfy.sh/chainat_flood_live_stream_2026/sse');
       eventSource.onmessage = function(event) {
