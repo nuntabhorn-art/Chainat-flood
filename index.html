@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>ชัยนาทเตือนน้ำ • เฝ้าระวังเขื่อนเจ้าพระยา</title>
+  <title>ชัยนาทSafeZone • แผนที่เฝ้าระวังน้ำหลากและพื้นที่ปลอดภัย</title>
   
-  <!-- ไอคอนสัญลักษณ์เตือนภัยน้ำท่วม พื้นหลังสีฟ้าสดใส (ฝัง Base64 PNG แท้ ไม่ดำแน่นอน) -->
+  <!-- ไอคอนสัญลักษณ์เตือนภัยน้ำท่วม พื้นหลังสีฟ้าสดใส (ฝัง Base64 PNG แท้ คมชัด ไม่ดำ 100%) -->
   <link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAGoElEQVR4nO2cPY4cRRiGe8YrEyBBYnEDH4AAZEsEiIgDIGERkMMVSOEK5CCBjMQBNgE5WGmRCXwATgByQrASWIuWoK3a2ql+e6prqur7qfcJrN1We6bmnae+r7p2pndv/fDnRMgSe+kBEL1QDgKhHARCOQiEchAI5SAQykEglINAKAeBUA4CoRwEQjkIhHIQCOUgEMpBIJSDQCgHgVAOAqEcBEI57vD3Z+9ID0ERlOOW2Qz6EaAcBEI5XhMXDBaPGcoxTUs20I9pms6kByBP7MH1s4dnH/4Rjr/9419Cg7pDaurKwDadvA4rxy3Xzx6Gf/WwWMNQYdt08lF2g38d8qBszD+E4jGdMO1OJx5bPIzF45tOzmTotrJoxqSsuaTPPh9ZrAebTj7KuG0FmZEeEVmczk+64mX8rm86OZ9x5QigRYbg4mPTu9ju5EHl2DqHRIrH0XYWn7Dp5ExGlGO9ocSINxdZhrtayTcjoOTipT8jVo6Z/CWFtp2Pbowlx+mtYajmMpAcBQ1l8fxx/BhIjkBZmxiwuYwiR93pPkjxGEKOUxpKzGjNxb8ctcxIH8G9H/7lCNRaNIyz+HD+V9n8yf3gyf2DIy+fvsp5fMfbYp4rR92GEjNIc3ErRzsz0sf06odbOQLtlgjuFx8+5eg/lV0WD4dytG4oMb6bizc5epqRPoszP7zJEei5IPC6+HAlh4aJq2EMtfAjR/+GEuOyufiRIyBV5P01FydyaJus2sZThgc5ZBtKjLPmYl4OPWakY7Duh3k5AhrMmNEzkhOxLYf+qal/hCsYlkNbQ4nx0VysyqHZjBkHfliVI6DTjBnNY8vBpBwWJ6LFMduTQ39DiTHdXPZXF+fSY9iALTNm7Pqxn6bJlh8zVsyYsTXamauL8334SXYoOdiadggTr2L2YX/wu1osNpQYQ80lmHCWHn3zg48FRpSNRTNm4jtY6uSgQCxcrSgsIcqnWgEKX1H6vi9fyl5dnOtRxHpDidHZXNDbvbbPocEPT2bMaPNj5V0+8kVqPauQ1mbkfG26FkoWH0cnf9a37KUU0TCxWiPyPf3MnrBh+7xzl/HXUGIEm0v++7i798V3Wx+9QwnxbUag8+1vt07vkpu39Owyjs2YOi4+yqp++Z192ikywlIjpdHi45TFQElbSamoyCANJaZRczl9jVhHjsCJlsiaEW4L1vOydqaiHxWvGyp/2KfW1qqgGdPSzeNaU+X1Vt/XbnI3wTDETYVEcKmR2vDgyf3+9WNm6+Kj3RZD248J5rs84FLjgIKdj9Z/AutxH9JNhWRMM2Yyr2y77UZ2vUktskT82vXl01cHnUWqpwTS5tL/76CVr1YKuP7289ufRcuG4NVKTFw8zr78XnAkwnLoMUMVSvzQ8r0VmhGjJA1JOeKyQRCCKYnJwYayTpyJlB8yctCMHMT9EF5z0Ix1ZPMRkINLjTL659ZbDjaUrQg2l677HKwZVei286Fln4MopJ8cLBu16Jak8Pb5e598mh78/eef+o9EA9rSkJFjMYWUQSxRm0ZXOTJTSHFpif40eshRnEKKA0sMpdFQjooppJizxGIa9eVomkKKcktMp1FNjs4ppKiyxEcap8ohnkKKoCXO0iiUQ2EKKd0s8ZrGNjlMpJDSyBL3aWTJYTSFlCqWjJPGmhxuUkgpsGTANBbkcJxCylFLRk7jVo6hUkg5yIVpTNO0e/TLP9IjIUrhh30IhHIQCOUgEMpBIJSDQCgHgVAOAqEcBEI5CIRyEAjlIBDKQSCUg0AoB4HsLz96Q3oMimAaMbubm5vwy+Nf/xUciiCLTjCNO3IEBskls04Mm8ayHAGXuRT3jtHSOCJHwEEuFdcTg6SRK0fAXC5N15i+09gsR0B5Lp2vO1ymUS5HQFUu4teintKoIEdAMBdxJ1IcpFFTjkC3XBQ6kWI3jSZyBPJzeX754v3H72aebMKJFHNptJUjsJjL88sX6PzFaIw6kWIljU5yzNz75rey//jfV4/qjkQD+tNoLkdxBAjTothKo74c1V//OspdMZ1GHTk6R4BQIoqbNArlUPL61+nmitc0NshhIgJEdVFGSGNNDtOvf50CVwZM41AOxxEgVkQZPI3d/utLwaEQzfDT5wRCOQiEchAI5SAQykEglINAKAeBUA4CoRwEQjkIhHIQCOUgEMpBIJSDQCgHgVAOAqEcBEI5CIRyEAjlIBDKQSCUg0AoB4FQDgKhHARCOQiEchAI5SAQykEglINAKAeBUA4CoRwEQjkI5H+2R1YabxEsiQAAAABJRU5ErkJggg==">
   <link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,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">
   
-  <meta name="apple-mobile-web-app-title" content="ชัยนาทเตือนน้ำ">
-  <meta name="application-name" content="ชัยนาทเตือนน้ำ">
-  <meta name="theme-color" content="#0284c7">
+  <!-- ตั้งชื่อแอปใต้ไอคอนมือถือเป็น "ชัยนาทSafeZone" -->
+  <meta name="apple-mobile-web-app-title" content="ชัยนาทSafeZone">
+  <meta name="application-name" content="ชัยนาทSafeZone">
+  <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -70,16 +71,16 @@
 </head>
 <body class="bg-slate-900 text-slate-100 flex flex-col h-[100dvh] overflow-hidden select-none">
 
-  <!-- Header ด้านบนสุด (แบบบาง ไม่กินเนื้อที่จอ) -->
+  <!-- Header ด้านบนสุด (สไตล์มินิมอล โมเดิร์น ไม่บังจอ) -->
   <header class="absolute top-0 left-0 right-0 z-[500] bg-slate-900/90 backdrop-blur border-b border-slate-700/80 px-3 py-1.5 flex items-center justify-between shadow-lg">
     <div class="flex items-center gap-2">
-      <div class="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center shadow">
-        <i data-lucide="waves" class="w-4 h-4 text-white"></i>
+      <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow">
+        <i data-lucide="shield-check" class="w-4 h-4 text-white"></i>
       </div>
       <div>
         <h1 class="font-bold text-xs leading-tight flex items-center gap-1">
-          ชัยนาทเตือนน้ำ
-          <span class="text-[9px] bg-red-500/20 text-red-400 px-1 rounded-full font-mono">LIVE</span>
+          ชัยนาทSafeZone
+          <span class="text-[9px] bg-red-500/20 text-red-400 border border-red-500/30 px-1 rounded-full font-mono">C.13 LIVE</span>
         </h1>
         <p class="text-[9px] text-slate-300">อ.นันตพร ทองเต็ม วพบ.ชัยนาท</p>
       </div>
@@ -98,11 +99,11 @@
     </div>
   </header>
 
-  <!-- หน้าจอแผนที่เต็มจอ -->
+  <!-- หน้าจอแผนที่เต็มจอ 100% -->
   <main class="relative w-full h-full flex-1">
     <div id="map"></div>
 
-    <!-- กล่องสรุปสถานการณ์น้ำ C.2 & C.13 แบบย่อกะทัดรัด (ไม่บังแม่น้ำ) -->
+    <!-- กล่องตัวเลขน้ำ C.2 & C.13 แบบย่อมุมซ้ายบน -->
     <div class="absolute top-12 left-2 z-[400] bg-slate-900/85 backdrop-blur border border-slate-700/80 p-1.5 rounded-lg text-[10px] space-y-0.5 shadow-md">
       <div class="flex justify-between items-center gap-2 text-slate-300">
         <span>น้ำเหนือ C.2:</span>
@@ -114,7 +115,7 @@
       </div>
     </div>
 
-    <!-- ปุ่มตำแหน่ง & โทรฉุกเฉิน (ย้ายมาขวาล่างเหนือแถบเมนู) -->
+    <!-- ปุ่มตำแหน่ง & โทรฉุกเฉิน (มุมขวาล่าง) -->
     <div class="absolute bottom-16 right-3 z-[400] flex flex-col gap-2">
       <button onclick="locateUser()" class="w-9 h-9 bg-slate-800/90 active:bg-slate-700 text-white border border-slate-600 rounded-full flex items-center justify-center shadow-lg transition" title="หาตำแหน่งของฉัน">
         <i data-lucide="crosshair" class="w-4 h-4 text-cyan-400"></i>
@@ -127,7 +128,7 @@
       </a>
     </div>
 
-    <!-- แถบปุ่มกรองด้านล่างสุด (Bottom Bar ไม่บังแผนที่) -->
+    <!-- แถบปุ่มกรองด้านล่างสุด (Bottom Bar) -->
     <div class="absolute bottom-2 left-2 right-14 z-[400] flex gap-1 overflow-x-auto pb-0.5 scrollbar-none">
       <button onclick="filterLayer('all')" id="btn-all" class="px-2.5 py-1 rounded-full text-[10px] font-medium bg-blue-600 text-white shadow whitespace-nowrap">ทั้งหมด</button>
       <button onclick="filterLayer('warning')" id="btn-warning" class="px-2.5 py-1 rounded-full text-[10px] font-medium bg-slate-800/90 text-amber-400 border border-slate-700 shadow whitespace-nowrap">⚠️ เฝ้าระวัง</button>
@@ -258,7 +259,7 @@
           <p class="text-red-400 font-medium">• ท้ายเขื่อน (อ.สรรพยา) ระดับน้ำสูงขึ้น <b>15 - 30 ซม.</b></p>
         </div>
         <a href="https://www.facebook.com/Kromchon" target="_blank" rel="noopener noreferrer" class="mt-1 w-full py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg flex items-center justify-center gap-1 font-medium text-[11px] transition">
-          <i data-lucide="external-link" class="w-3 h-3"></i>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
           <span>ดูเพจ Facebook กรมชลประทาน</span>
         </a>
       </div>
@@ -446,7 +447,7 @@
 
       marker.bindPopup(`
         <div class="p-1 text-slate-900 font-sans max-w-[180px]">
-          <div class="bg-amber-100 border border-amber-300 text-amber-800 text-[8px] font-bold px-1 py-0.5 rounded mb-1">⚠️️ รอตรวจสอบ</div>
+          <div class="bg-amber-100 border border-amber-300 text-amber-800 text-[8px] font-bold px-1 py-0.5 rounded mb-1">⚠️ รอตรวจสอบ</div>
           <b class="block text-xs text-slate-900">${data.title}</b>
           ${levelHtml}
           ${detailHtml}
