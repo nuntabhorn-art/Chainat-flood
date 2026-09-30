@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>ชัยนาทSafeZone • เฝ้าระวังเขื่อนเจ้าพระยา</title>
   
-  <!-- ไอคอน Pixar 3D แท้ ความละเอียดสูง ไม่ติดพื้นหลังดำบน iOS Safari -->
-  <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Cloud%20with%20rain/3D/cloud_with_rain_3d.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Cloud%20with%20rain/3D/cloud_with_rain_3d.png">
+  <!-- ไอคอน Pixar 3D เมฆฝน + พื้นหลังสีท้องฟ้าจางๆ ทึบ 100% ป้องกัน iOS ทำพื้นหลังดำถาวร -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://images.weserv.nl/?url=raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Cloud%2520with%2520rain/3D/cloud_with_rain_3d.png&w=180&h=180&bg=dbeafe&output=jpg">
+  <link rel="icon" type="image/jpeg" sizes="192x192" href="https://images.weserv.nl/?url=raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Cloud%2520with%2520rain/3D/cloud_with_rain_3d.png&w=192&h=192&bg=dbeafe&output=jpg">
   
   <meta name="apple-mobile-web-app-title" content="ชัยนาทSafeZone">
   <meta name="application-name" content="ชัยนาทSafeZone">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -179,7 +179,7 @@
     <!-- แถบปุ่มกรองด้านล่างสุด -->
     <div class="absolute bottom-2 left-2 right-14 z-[400] flex gap-1 overflow-x-auto pb-0.5 ios-safe-bottom scrollbar-none">
       <button onclick="filterLayer('all')" id="btn-all" class="px-3 py-1.5 rounded-full text-xs font-medium bg-blue-600 text-white shadow whitespace-nowrap">ทั้งหมด</button>
-      <button onclick="filterLayer('patient')" id="btn-patient" class="px-3 py-1.5 rounded-full text-xs font-medium bg-purple-950/90 text-purple-300 border border-purple-500 shadow whitespace-nowrap">🛏️ ผู้ป่วยติดเตียง</button>
+      <button onclick="filterLayer('patient')" id="btn-patient" class="px-3 py-1.5 rounded-full text-xs font-medium bg-purple-950/90 text-purple-300 border border-purple-500 shadow whitespace-nowrap">🛏️️ ผู้ป่วยติดเตียง</button>
       <button onclick="filterLayer('warning')" id="btn-warning" class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-amber-400 border border-slate-700 shadow whitespace-nowrap">⚠️ เฝ้าระวัง</button>
       <button onclick="filterLayer('flood')" id="btn-flood" class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-slate-300 border border-slate-700 shadow whitespace-nowrap">🌊 น้ำท่วม</button>
       <button onclick="filterLayer('parking')" id="btn-parking" class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-slate-300 border border-slate-700 shadow whitespace-nowrap">🚗 จุดฝากรถ</button>
