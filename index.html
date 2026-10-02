@@ -116,11 +116,12 @@
       </a>
     </div>
 
-    <!-- แถบปุ่มกรอง -->
+    <!-- แถบปุ่มกรอง (เพิ่มปุ่มกล้อง CCTV) -->
     <div class="absolute bottom-2 left-2 right-14 z-[400] flex gap-1 overflow-x-auto pb-0.5 ios-safe-bottom scrollbar-none">
       <button onclick="filterLayer('all')" id="btn-all" class="px-3 py-1.5 rounded-full text-xs font-medium bg-blue-600 text-white shadow whitespace-nowrap">ทั้งหมด</button>
+      <button onclick="filterLayer('cctv')" id="btn-cctv" class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-cyan-400 border border-cyan-500/50 shadow whitespace-nowrap">📹 กล้อง CCTV</button>
       <button onclick="filterLayer('patient')" id="btn-patient" class="px-3 py-1.5 rounded-full text-xs font-medium bg-purple-950/90 text-purple-300 border border-purple-500 shadow whitespace-nowrap">🛏️ ผู้ป่วยติดเตียง</button>
-      <button onclick="filterLayer('warning')" id="btn-warning" class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-amber-400 border border-slate-700 shadow whitespace-nowrap">⚠️ เฝ้าระวัง</button>
+      <button onclick="filterLayer('warning')" id="btn-warning" class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-amber-400 border border-slate-700 shadow whitespace-nowrap">⚠️️ เฝ้าระวัง</button>
       <button onclick="filterLayer('flood')" id="btn-flood" class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-slate-300 border border-slate-700 shadow whitespace-nowrap">🌊 น้ำท่วม</button>
       <button onclick="filterLayer('parking')" id="btn-parking" class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-slate-300 border border-slate-700 shadow whitespace-nowrap">🚗 จุดฝากรถ</button>
       <button onclick="filterLayer('shelter')" id="btn-shelter" class="px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-slate-300 border border-slate-700 shadow whitespace-nowrap">🏠 ที่พัก</button>
@@ -128,7 +129,7 @@
     </div>
   </main>
 
-  <!-- ฟอร์มปักหมุดช่วยเหลือ (เพิ่มระบบพิมพ์ค้นหาสถานที่ & ทางลัดตำบล) -->
+  <!-- ฟอร์มปักหมุดช่วยเหลือ -->
   <div id="sosModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[600] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-slate-800 border border-slate-700 rounded-t-2xl sm:rounded-2xl w-full max-w-md max-h-[92dvh] flex flex-col overflow-hidden shadow-2xl">
       <div class="px-4 py-2.5 border-b border-slate-700 flex items-center justify-between">
@@ -136,9 +137,7 @@
           <i data-lucide="shield-alert" class="w-4 h-4 text-amber-400"></i>
           <span>ปักหมุดช่วยเหลือ (ระบบคัดกรองข้อมูล)</span>
         </div>
-        <button onclick="closeSosModal()" class="text-slate-400 hover:text-white p-1">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
+        <button onclick="closeSosModal()" class="text-slate-400 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
       <form id="sosForm" onsubmit="submitPin(event)" class="p-3.5 space-y-2.5 overflow-y-auto text-xs sm:text-sm">
@@ -168,14 +167,13 @@
           </div>
         </div>
 
-        <!-- ส่วนระบุพิกัด: พิมพ์ชื่อสถานที่ หรือ กดปุ่มลัดตำบล หรือ ดึง GPS -->
+        <!-- ส่วนค้นหาชื่อสถานที่ & พิกัด -->
         <div class="bg-slate-900/90 p-2.5 rounded-xl border border-slate-700 space-y-2">
           <div class="flex items-center justify-between">
-            <label class="block text-cyan-300 font-semibold text-xs">2. ระบุจุดตำแหน่ง (ไม่ได้อยู่หน้างานก็พิมพ์ได้)</label>
+            <label class="block text-cyan-300 font-semibold text-xs">2. ระบุจุดตำแหน่ง (พิมพ์ชื่อสถานที่ หรือแตะเลือกได้)</label>
             <span class="text-[10px] text-slate-400">ขับผ่าน / คนอื่นส่งมา</span>
           </div>
 
-          <!-- ช่องค้นหาชื่อสถานที่ / วัด / ซอย -->
           <div class="flex gap-1.5">
             <input type="text" id="search-place-input" placeholder="พิมพ์ชื่อสถานที่ เช่น วัดหาดอาษา, สรรพยา..." class="w-full bg-slate-950 border border-slate-600 rounded-lg px-2.5 py-1.5 text-white text-xs focus:outline-none focus:border-cyan-400">
             <button type="button" onclick="searchLocationByName()" class="px-2.5 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white font-medium rounded-lg text-xs whitespace-nowrap flex items-center gap-1">
@@ -183,7 +181,6 @@
             </button>
           </div>
 
-          <!-- ทางลัดกดเลือกตำบล/พื้นที่เสี่ยงยอดฮิตในชัยนาท -->
           <div>
             <div class="text-[10px] text-slate-400 mb-1">หรือแตะเลือกตำบลด่วน:</div>
             <div class="flex flex-wrap gap-1 text-[11px]">
@@ -197,7 +194,6 @@
             </div>
           </div>
 
-          <!-- ช่องแสดงพิกัดจริง พร้อมปุ่มดึง GPS -->
           <div class="flex gap-1.5 pt-1">
             <input type="text" id="pin-coords" required readonly placeholder="พิกัดจะขึ้นตรงนี้ หรือแตะเลือกบนแผนที่" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-slate-300 text-xs font-mono">
             <button type="button" onclick="getFormLocation()" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded-lg flex items-center gap-1 font-medium whitespace-nowrap text-xs">
@@ -375,6 +371,7 @@
     const map = L.map('map', { zoomControl: false }).setView([15.1550, 100.2000], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
 
+    const cctvLayer = L.layerGroup().addTo(map); // เลเยอร์กล้อง CCTV
     const patientLayer = L.layerGroup().addTo(map);
     const warningLayer = L.layerGroup().addTo(map);
     const floodLayer = L.layerGroup().addTo(map);
@@ -383,7 +380,67 @@
     const hospitalLayer = L.layerGroup().addTo(map);
     const activeMarkers = {};
 
-    // ฟังก์ชันค้นหาพิกัดจาก "ชื่อสถานที่" (ผ่าน OpenStreetMap Nominatim)
+    // 0. จุดกล้องวงจรปิด CCTV เฝ้าระวังน้ำตามจุดยุทธศาสตร์ชัยนาท
+    const cctvStations = [
+      {
+        name: "CCTV เขื่อนเจ้าพระยา (ท้ายเขื่อน C.13)",
+        location: "สชป.12 อ.สรรพยา",
+        coords: [15.1583, 100.1830],
+        url: "https://www.thaiwater.net"
+      },
+      {
+        name: "CCTV สะพานใหม่สรรพยา (ต.หาดอาษา)",
+        location: "จุดเฝ้าระวังตลิ่งต่ำ อ.สรรพยา",
+        coords: [15.1325, 100.2460],
+        url: "https://www.thaiwater.net"
+      },
+      {
+        name: "CCTV ชุมชนวัดโพนางดำตก",
+        location: "ริมแม่น้ำเจ้าพระยา อ.สรรพยา",
+        coords: [15.1055, 100.2790],
+        url: "https://www.thaiwater.net"
+      },
+      {
+        name: "CCTV สะพานชัยนาทนเรนทร (ตัวเมือง)",
+        location: "อ.เมืองชัยนาท",
+        coords: [15.1840, 100.1260],
+        url: "https://www.thaiwater.net"
+      },
+      {
+        name: "CCTV ประตูระบายน้ำบรมธาตุ (แม่น้ำท่าจีน)",
+        location: "ต.ชัยนาท อ.เมืองชัยนาท",
+        coords: [15.1530, 100.1650],
+        url: "https://www.thaiwater.net"
+      },
+      {
+        name: "CCTV สะพานวัดปากคลองมะขามเฒ่า",
+        location: "อ.วัดสิงห์",
+        coords: [15.2820, 100.0410],
+        url: "https://www.thaiwater.net"
+      }
+    ];
+
+    cctvStations.forEach(cam => {
+      L.marker(cam.coords, {
+        icon: L.divIcon({
+          className: 'custom-icon',
+          html: `<div class="bg-cyan-600 text-white w-8 h-8 rounded-full border-2 border-white shadow-xl flex items-center justify-center font-bold text-xs animate-bounce">📹</div>`,
+          iconSize: [32, 32],
+          iconAnchor: [16, 16]
+        })
+      }).addTo(cctvLayer).bindPopup(`
+        <div class="p-2 text-slate-900 font-sans max-w-[210px]">
+          <span class="bg-cyan-100 text-cyan-800 text-[10px] font-bold px-1.5 py-0.5 rounded">📹 กล้องเฝ้าระวังน้ำสด</span>
+          <b class="block text-sm font-bold text-slate-900 mt-1">${cam.name}</b>
+          <p class="text-xs text-slate-600 mt-0.5">${cam.location}</p>
+          <a href="${cam.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1 w-full mt-2 bg-cyan-600 hover:bg-cyan-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow-md transition">
+            📹 เปิดดูภาพสด / สภาพน้ำ
+          </a>
+        </div>
+      `);
+    });
+
+    // ค้นหาพิกัดจากชื่อสถานที่
     async function searchLocationByName() {
       const query = document.getElementById('search-place-input').value.trim();
       if (!query) return alert("กรุณาพิมพ์ชื่อสถานที่ก่อนกดค้นหาค่ะ");
@@ -408,7 +465,7 @@
       }
     }
 
-    // ฟังก์ชันปุ่มลัดเลือกตำบล
+    // ปุ่มลัดเลือกตำบล
     function setQuickCoords(lat, lng, name) {
       document.getElementById('pin-coords').value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
       document.getElementById('search-place-input').value = name;
@@ -758,27 +815,30 @@
       }
     }
 
+    // ฟังก์ชันกรองเลเยอร์ (รองรับปุ่มกล้อง CCTV)
     function filterLayer(type) {
-      ['all', 'patient', 'warning', 'flood', 'parking', 'shelter', 'hospital'].forEach(id => {
+      ['all', 'cctv', 'patient', 'warning', 'flood', 'parking', 'shelter', 'hospital'].forEach(id => {
         const btn = document.getElementById('btn-' + id);
         if (btn) btn.className = "px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800/90 text-slate-300 border border-slate-700 shadow whitespace-nowrap";
       });
       document.getElementById('btn-' + type).className = "px-3 py-1.5 rounded-full text-xs font-medium bg-blue-600 text-white shadow whitespace-nowrap";
 
       if (type === 'all') {
-        map.addLayer(patientLayer); map.addLayer(warningLayer); map.addLayer(floodLayer); map.addLayer(parkingLayer); map.addLayer(shelterLayer); map.addLayer(hospitalLayer);
+        map.addLayer(cctvLayer); map.addLayer(patientLayer); map.addLayer(warningLayer); map.addLayer(floodLayer); map.addLayer(parkingLayer); map.addLayer(shelterLayer); map.addLayer(hospitalLayer);
+      } else if (type === 'cctv') {
+        map.addLayer(cctvLayer); map.removeLayer(patientLayer); map.removeLayer(warningLayer); map.removeLayer(floodLayer); map.removeLayer(parkingLayer); map.removeLayer(shelterLayer); map.removeLayer(hospitalLayer);
       } else if (type === 'patient') {
-        map.addLayer(patientLayer); map.removeLayer(warningLayer); map.removeLayer(floodLayer); map.removeLayer(parkingLayer); map.removeLayer(shelterLayer); map.removeLayer(hospitalLayer);
+        map.removeLayer(cctvLayer); map.addLayer(patientLayer); map.removeLayer(warningLayer); map.removeLayer(floodLayer); map.removeLayer(parkingLayer); map.removeLayer(shelterLayer); map.removeLayer(hospitalLayer);
       } else if (type === 'warning') {
-        map.removeLayer(patientLayer); map.addLayer(warningLayer); map.removeLayer(floodLayer); map.removeLayer(parkingLayer); map.removeLayer(shelterLayer); map.removeLayer(hospitalLayer);
+        map.removeLayer(cctvLayer); map.removeLayer(patientLayer); map.addLayer(warningLayer); map.removeLayer(floodLayer); map.removeLayer(parkingLayer); map.removeLayer(shelterLayer); map.removeLayer(hospitalLayer);
       } else if (type === 'flood') {
-        map.removeLayer(patientLayer); map.removeLayer(warningLayer); map.addLayer(floodLayer); map.removeLayer(parkingLayer); map.removeLayer(shelterLayer); map.removeLayer(hospitalLayer);
+        map.removeLayer(cctvLayer); map.removeLayer(patientLayer); map.removeLayer(warningLayer); map.addLayer(floodLayer); map.removeLayer(parkingLayer); map.removeLayer(shelterLayer); map.removeLayer(hospitalLayer);
       } else if (type === 'parking') {
-        map.removeLayer(patientLayer); map.removeLayer(warningLayer); map.removeLayer(floodLayer); map.addLayer(parkingLayer); map.removeLayer(shelterLayer); map.removeLayer(hospitalLayer);
+        map.removeLayer(cctvLayer); map.removeLayer(patientLayer); map.removeLayer(warningLayer); map.removeLayer(floodLayer); map.addLayer(parkingLayer); map.removeLayer(shelterLayer); map.removeLayer(hospitalLayer);
       } else if (type === 'shelter') {
-        map.removeLayer(patientLayer); map.removeLayer(warningLayer); map.removeLayer(floodLayer); map.removeLayer(parkingLayer); map.addLayer(shelterLayer); map.removeLayer(hospitalLayer);
+        map.removeLayer(cctvLayer); map.removeLayer(patientLayer); map.removeLayer(warningLayer); map.removeLayer(floodLayer); map.removeLayer(parkingLayer); map.addLayer(shelterLayer); map.removeLayer(hospitalLayer);
       } else if (type === 'hospital') {
-        map.removeLayer(patientLayer); map.removeLayer(warningLayer); map.removeLayer(floodLayer); map.removeLayer(parkingLayer); map.removeLayer(shelterLayer); map.addLayer(hospitalLayer);
+        map.removeLayer(cctvLayer); map.removeLayer(patientLayer); map.removeLayer(warningLayer); map.removeLayer(floodLayer); map.removeLayer(parkingLayer); map.removeLayer(shelterLayer); map.addLayer(hospitalLayer);
       }
     }
   </script>
