@@ -77,13 +77,14 @@
     </div>
 
     <div class="flex items-center gap-1.5">
+      <!-- ปุ่มเปิดรายงานทางการ 2 ต.ค. 69 -->
       <button onclick="togglePasakModal()" class="px-2 py-1 rounded-lg bg-amber-950/90 border border-amber-500/50 text-amber-300 text-xs font-medium flex items-center gap-1 shadow">
-        <span>ป่าสัก:</span> <b class="text-white">110%</b>
+        <span>สถานการณ์น้ำ:</span> <b class="text-white">2 ต.ค.</b>
       </button>
 
       <button onclick="toggleDamModal()" class="px-2.5 py-1 rounded-lg bg-blue-950/90 border border-blue-500/50 text-cyan-300 text-xs font-medium flex items-center gap-1">
         <i data-lucide="gauge" class="w-3.5 h-3.5"></i>
-        <span>C.13:</span> <b id="header-flow" class="text-white">2,260</b>
+        <span>C.13:</span> <b id="header-flow" class="text-white">2,500</b>
       </button>
 
       <button onclick="openSosModal()" class="px-3 py-1 rounded-lg bg-red-600 active:bg-red-500 text-white text-xs font-bold flex items-center gap-1 shadow-md shadow-red-600/40 animate-pulse">
@@ -97,22 +98,27 @@
   <main class="relative w-full h-full flex-1">
     <div id="map"></div>
 
-    <!-- กล่องตัวเลขด่วนมุมซ้ายบน -->
+    <!-- กล่องตัวเลขด่วนมุมซ้ายบน (อัปเดตตามเอกสาร 2 ต.ค. 69) -->
     <div class="absolute top-[82px] left-2 z-[400] bg-slate-900/90 backdrop-blur border border-slate-700 p-2 rounded-xl text-xs space-y-1 shadow-xl">
       <div class="flex justify-between items-center gap-3 text-slate-300">
         <span>น้ำเหนือ C.2:</span>
-        <b class="text-amber-400 font-mono" id="card-c2">2,565 ลบ.ม./วิ</b>
+        <b class="text-amber-400 font-mono" id="card-c2">2,416 ลบ.ม./วิ</b>
       </div>
       <div class="flex justify-between items-center gap-3 text-slate-300">
         <span>ระบาย C.13:</span>
-        <b class="text-cyan-400 font-mono" id="card-c13">2,260 ลบ.ม./วิ</b>
+        <b class="text-cyan-400 font-mono" id="card-c13">2,500 ลบ.ม./วิ</b>
+      </div>
+      <div class="flex justify-between items-center gap-3 text-slate-400 text-[10px] pt-0.5 border-t border-slate-800">
+        <span>ตัดยอด 2 ฝั่ง:</span>
+        <b class="text-emerald-400 font-mono">605 ลบ.ม./วิ</b>
       </div>
     </div>
 
     <!-- ปุ่มด้านข้างขวาล่าง -->
     <div class="absolute bottom-16 right-3 z-[400] flex flex-col gap-2">
-      <button onclick="togglePasakModal()" class="w-10 h-10 bg-amber-700 active:bg-amber-600 text-white rounded-full flex items-center justify-center shadow-lg border border-amber-400" title="ดูรายงานลุ่มน้ำป่าสัก">
-        <span class="text-xs font-bold">ป่าสัก</span>
+      <button onclick="togglePasakModal()" class="w-10 h-10 bg-gradient-to-tr from-amber-600 to-red-600 active:opacity-80 text-white rounded-full flex flex-col items-center justify-center shadow-lg border border-white/20" title="สรุป 29 จังหวัด & น้ำป่าสัก">
+        <span class="text-[9px] font-bold leading-none">29จว.</span>
+        <span class="text-[8px] leading-none text-amber-200">เตือนภัย</span>
       </button>
       <button onclick="locateUser()" class="w-10 h-10 bg-slate-800/90 active:bg-slate-700 text-white border border-slate-600 rounded-full flex items-center justify-center shadow-lg transition" title="หาตำแหน่งของฉัน">
         <i data-lucide="crosshair" class="w-5 h-5 text-cyan-400"></i>
@@ -138,65 +144,106 @@
     </div>
   </main>
 
-  <!-- Modal รายงานสถานการณ์น้ำลุ่มน้ำป่าสัก & เจ้าพระยาตอนล่าง -->
-  <div id="pasakModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[650] hidden flex items-center justify-center p-3">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md p-4 text-xs space-y-3 shadow-2xl text-white">
-      <div class="flex items-center justify-between border-b border-slate-700 pb-2.5">
-        <div class="flex items-center gap-1.5">
+  <!-- Modal รายงานสถานการณ์น้ำฉบับสมบูรณ์ (ข้อมูล 2 ต.ค. 2569) -->
+  <div id="pasakModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-[650] hidden flex items-center justify-center p-3">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg max-h-[90dvh] flex flex-col overflow-hidden text-xs shadow-2xl text-white">
+      
+      <div class="px-4 py-3 border-b border-slate-700 flex items-center justify-between bg-slate-950">
+        <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
-          <h3 class="font-bold text-sm text-cyan-300">รายงานสถานการณ์น้ำลุ่มน้ำป่าสัก</h3>
+          <h3 class="font-bold text-sm text-cyan-300">รายงานสถานการณ์น้ำทางการ (กรมชลประทาน)</h3>
         </div>
-        <button onclick="togglePasakModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+        <button onclick="togglePasakModal()" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
       </div>
 
-      <div class="text-[10px] text-slate-400 bg-slate-950 p-2 rounded-lg flex justify-between items-center border border-slate-800">
-        <span>ข้อมูลทางการ: <b>2 ตุลาคม 2569 (06.00 น.)</b></span>
-        <span class="text-cyan-400">FB กรมชลประทาน</span>
+      <div class="p-4 space-y-3 overflow-y-auto">
+        <div class="flex justify-between items-center text-[11px] text-slate-400 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
+          <span>ข้อมูลประจำวันที่: <b>2 ตุลาคม 2569</b></span>
+          <span class="text-cyan-400 font-mono">SWOC 1460</span>
+        </div>
+
+        <!-- 1. การบริหารจัดการน้ำลุ่มน้ำเจ้าพระยา -->
+        <div class="bg-slate-950 p-3 rounded-xl border border-cyan-500/40 space-y-2">
+          <div class="font-bold text-cyan-300 flex items-center gap-1.5">
+            <i data-lucide="waves" class="w-4 h-4"></i>
+            <span>การบริหารจัดการน้ำฤดูฝนปี 2569 (เจ้าพระยา)</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-slate-300">
+            <div class="bg-slate-900 p-2 rounded-lg border border-slate-800">
+              <span class="text-[10px] text-slate-400">สถานี C.2 นครสวรรค์:</span>
+              <b class="block text-amber-400 text-sm font-mono mt-0.5">2,416 ลบ.ม./วิ</b>
+            </div>
+            <div class="bg-slate-900 p-2 rounded-lg border border-slate-800">
+              <span class="text-[10px] text-slate-400">ระดับเหนือเขื่อนเจ้าพระยา:</span>
+              <b class="block text-cyan-400 text-sm font-mono mt-0.5">+17.77 ม.รทก.</b>
+            </div>
+            <div class="bg-slate-900 p-2 rounded-lg border border-slate-800">
+              <span class="text-[10px] text-slate-400">ระบายท้ายเขื่อน C.13 วันนี้:</span>
+              <b class="block text-red-400 text-sm font-mono mt-0.5">2,500 ลบ.ม./วิ</b>
+            </div>
+            <div class="bg-slate-900 p-2 rounded-lg border border-slate-800">
+              <span class="text-[10px] text-slate-400">ตัดยอดน้ำเข้า 2 ฝั่งรวม:</span>
+              <b class="block text-emerald-400 text-sm font-mono mt-0.5">605 ลบ.ม./วิ</b>
+            </div>
+          </div>
+          <div class="text-[10px] text-slate-400 bg-slate-900 p-2 rounded-lg border border-slate-800 space-y-0.5">
+            <p>• <b>ฝั่งตะวันตก (348 ลบ.ม./วิ):</b> คลองมะขามเฒ่า-อู่ทอง, ท่าจีน (ปตร.พลเทพ), แม่น้ำน้อย (ปตร.บรมธาตุ)</p>
+            <p>• <b>ฝั่งตะวันออก (257 ลบ.ม./วิ):</b> คลองชัยนาท-ป่าสัก (ปตร.มโนรมย์), คลองชัยนาท-อยุธยา (ปตร.มหาราช)</p>
+          </div>
+        </div>
+
+        <!-- 2. ลุ่มน้ำป่าสัก & ปทุมธานี -->
+        <div class="bg-slate-950 p-3 rounded-xl border border-amber-500/40 space-y-1.5">
+          <div class="font-bold text-amber-400 flex items-center gap-1.5">
+            <i data-lucide="gauge" class="w-4 h-4"></i>
+            <span>ลุ่มน้ำป่าสัก และแม่น้ำเจ้าพระยาตอนล่าง</span>
+          </div>
+          <div class="space-y-1 text-slate-300">
+            <div class="flex justify-between">
+              <span>• เขื่อนป่าสักชลสิทธิ์ ระบายน้ำลงแม่น้ำป่าสัก:</span>
+              <b class="text-amber-300 font-mono">400 ลบ.ม./วิ</b>
+            </div>
+            <div class="flex justify-between">
+              <span>• ปริมาณน้ำไหลผ่านเขื่อนพระราม 6:</span>
+              <b class="text-amber-300 font-mono">546 ลบ.ม./วิ</b>
+            </div>
+            <div class="flex justify-between">
+              <span>• จุดเชื่อมต่อแม่น้ำเจ้าพระยา สถานี C.29B อ.สามโคก (ปทุมธานี):</span>
+              <b class="text-cyan-300 font-mono">เฉลี่ย 2,113 ลบ.ม./วิ</b>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. รายชื่อจังหวัดที่ต้องเฝ้าระวัง 29 จังหวัด -->
+        <div class="bg-slate-950 p-3 rounded-xl border border-red-500/50 space-y-1.5">
+          <div class="flex items-center justify-between">
+            <b class="text-red-400 text-xs">⚠️ 29 จังหวัดที่ต้องเฝ้าระวัง / ประสบอุทกภัย:</b>
+            <span class="text-[10px] bg-red-500/20 text-red-300 px-1.5 py-0.2 rounded font-mono">สถานะปัจจุบัน</span>
+          </div>
+          <p class="text-[11px] text-slate-300 leading-relaxed bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+            สมุทรสงคราม, ราชบุรี, กำแพงเพชร, นครนายก, เพชรบุรี, ชัยภูมิ, ปทุมธานี, สระบุรี, เพชรบูรณ์, จันทบุรี, นครราชสีมา, นครปฐม, ชลบุรี, ฉะเชิงเทรา, กาญจนบุรี, บุรีรัมย์, สุรินทร์, สิงห์บุรี, สมุทรปราการ, นครสวรรค์, พิจิตร, ระยอง, อ่างทอง, <b class="text-amber-400">ชัยนาท</b>, อุทัยธานี, ปราจีนบุรี, <b class="text-amber-400">พระนครศรีอยุธยา</b>, สระแก้ว และ สุพรรณบุรี
+          </p>
+          <div class="text-[10px] text-slate-400 bg-slate-900 p-2 rounded-lg border border-slate-800 space-y-0.5">
+            <b class="text-emerald-400">✓ 28 จังหวัดเข้าสู่ภาวะปกติแล้ว:</b>
+            <p>เชียงใหม่, ลำพูน, แม่ฮ่องสอน, เชียงราย, พะเยา, น่าน, ลำปาง, อุตรดิตถ์, พิษณุโลก, สุโขทัย, ตาก, อุดรธานี, เลย, สกลนคร, หนองบัวลำภู, ร้อยเอ็ด, นครพนม, มุกดาหาร, อำนาจเจริญ, อุบลราชธานี, ยโสธร, ตราด, ลพบุรี, ระนอง, ภูเก็ต, พังงา, กระบี่, ตรัง</p>
+          </div>
+        </div>
+
+        <!-- 4. เครื่องจักรเครื่องมือช่วยเหลือ -->
+        <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-[10px] text-slate-400 space-y-0.5">
+          <b class="text-slate-300">ความช่วยเหลือเครื่องจักร-เครื่องมือ (กรมชลประทาน รวม 730 หน่วย):</b>
+          <p>• เครื่องสูบน้ำ 555 / 1,914 ชุด | รถบรรทุกน้ำ 5 / 203 คัน</p>
+          <p>• เครื่องผลักดันน้ำ 86 / 367 เครื่อง | เครื่องจักรกลสนับสนุน 84 / 3,045 หน่วย</p>
+        </div>
       </div>
 
-      <div class="space-y-2 text-xs">
-        <!-- 1. เขื่อนป่าสักชลสิทธิ์ -->
-        <div class="bg-slate-950 p-2.5 rounded-xl border border-red-500/50">
-          <div class="flex justify-between items-center mb-1">
-            <b class="text-red-400">🚨 เขื่อนป่าสักชลสิทธิ์ (จ.ลพบุรี)</b>
-            <span class="bg-red-500/20 text-red-300 px-1.5 py-0.5 rounded text-[10px] font-bold">110% (เกินความจุ)</span>
-          </div>
-          <div class="flex justify-between text-slate-300 pt-0.5">
-            <span>น้ำกักเก็บ: <b>962 ล้าน ลบ.ม.</b></span>
-            <span>ระบายออก: <b class="text-cyan-400">229 ลบ.ม./วิ</b></span>
-          </div>
-        </div>
-
-        <!-- 2. เขื่อนพระราม 6 -->
-        <div class="bg-slate-950 p-2.5 rounded-xl border border-amber-500/50">
-          <div class="flex justify-between items-center mb-1">
-            <b class="text-amber-400">⚠️ เขื่อนพระราม 6 (จ.อยุธยา)</b>
-            <span class="text-amber-300 font-bold text-[11px]">ไหลผ่าน 546 ลบ.ม./วิ</span>
-          </div>
-          <p class="text-red-300 text-[11px] mb-1">• ระดับน้ำท้ายเขื่อนพระราม 6 เพิ่มขึ้น <b>1.00 – 1.20 ม.</b></p>
-          <div class="text-[10px] text-slate-400 bg-slate-900 p-2 rounded-lg border border-slate-800">
-            <span class="text-amber-300 font-semibold">📍 พื้นที่เฝ้าระวัง อ.ท่าเรือ:</span><br>
-            ต.ท่าเรือ, ท่าหลวง, จำปา, ท่าเจ้าสนุก, ศาลาลอย, วังแดง, โพธิ์เอน, ปากท่า
-          </div>
-        </div>
-
-        <!-- 3. สถานี C29B สามโคก -->
-        <div class="bg-slate-950 p-2.5 rounded-xl border border-emerald-500/50">
-          <div class="flex justify-between items-center">
-            <b class="text-emerald-400">✅ สถานี C.29B อ.สามโคก (จ.ปทุมธานี)</b>
-            <span class="text-emerald-300 font-mono font-bold">2,444 ลบ.ม./วิ</span>
-          </div>
-          <div class="flex justify-between items-center text-[10px] text-slate-400 mt-1">
-            <span>เกณฑ์ควบคุมสูงสุด: 3,600 ลบ.ม./วิ</span>
-            <span class="text-emerald-400 font-medium">ยังไม่ส่งผลกระทบ</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="pt-2 border-t border-slate-800 flex justify-between items-center text-[11px]">
-        <span class="text-slate-400">สายด่วนกรมชลประทาน:</span>
+      <div class="px-4 py-2.5 bg-slate-950 border-t border-slate-800 flex justify-between items-center text-[11px]">
+        <span class="text-slate-400">สายด่วนศูนย์ปฏิบัติการน้ำอัจฉริยะ:</span>
         <a href="tel:1460" class="text-cyan-400 font-bold hover:underline">📞 โทร 1460 (24 ชม.)</a>
       </div>
+
     </div>
   </div>
 
@@ -368,7 +415,7 @@
             <i data-lucide="bell-ring" class="w-3.5 h-3.5"></i>
             <span>ยิงข้อความแจ้งเตือนด่วน (Broadcast Live)</span>
           </div>
-          <input type="text" id="admin-broadcast-msg" placeholder="เช่น แจ้งเตือน! น้ำเขื่อนปรับขึ้นเป็น 2,300 เวลา 02.00 น." class="w-full bg-slate-950 border border-slate-600 rounded-lg px-2.5 py-1 text-white text-xs focus:outline-none focus:border-purple-400">
+          <input type="text" id="admin-broadcast-msg" placeholder="เช่น แจ้งเตือน! น้ำเขื่อนปรับขึ้นเป็น 2,500 เวลา 09.00 น." class="w-full bg-slate-950 border border-slate-600 rounded-lg px-2.5 py-1 text-white text-xs focus:outline-none focus:border-purple-400">
           <button onclick="sendAdminBroadcast()" class="w-full py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-90 text-white font-bold rounded-lg text-xs">
             📢 ส่งการแจ้งเตือนถึงมือถือทุกคนทันที
           </button>
@@ -404,14 +451,14 @@
         <div class="text-cyan-300 font-semibold text-xs">⚡ เซนเซอร์สดหน้างาน C.13:</div>
         <div class="flex justify-between items-baseline pt-1">
           <span class="text-slate-400">ระบายน้ำขณะนี้:</span>
-          <b class="text-lg text-cyan-400 font-mono" id="modal-api-flow">2,260 <span class="text-xs font-normal text-slate-400">ลบ.ม./วิ</span></b>
+          <b class="text-lg text-cyan-400 font-mono" id="modal-api-flow">2,500 <span class="text-xs font-normal text-slate-400">ลบ.ม./วิ</span></b>
         </div>
       </div>
       <div class="bg-slate-900 p-2.5 rounded-xl border border-amber-500/40 space-y-1">
         <div class="text-amber-300 font-semibold text-xs">📢 แผนประกาศทางการ (Facebook):</div>
         <div class="text-xs text-slate-300 space-y-0.5 leading-tight">
-          <p>• น้ำเหนือ C.2 นครสวรรค์: <b id="modal-c2-val">2,565 ลบ.ม./วิ</b></p>
-          <p>• แผนปรับระบาย: สู่เป้าหมาย <b>2,300 ลบ.ม./วิ</b></p>
+          <p>• น้ำเหนือ C.2 นครสวรรค์: <b id="modal-c2-val">2,416 ลบ.ม./วิ</b></p>
+          <p>• ระบายน้ำท้ายเขื่อน: <b>2,500 ลบ.ม./วิ</b></p>
           <p class="text-red-400 font-medium">• ท้ายเขื่อน (อ.สรรพยา) ระดับน้ำสูงขึ้น <b>15 - 30 ซม.</b></p>
         </div>
         <a href="https://www.facebook.com/Kromchon" target="_blank" rel="noopener noreferrer" class="mt-1 w-full py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg flex items-center justify-center gap-1 font-medium text-xs transition">
@@ -433,8 +480,9 @@
   <script>
     lucide.createIcons();
 
-    let currentFlowVal = 2260;
-    let currentC2Val = 2565;
+    // ตัวเลขเริ่มต้นอิงประกาศล่าสุด 2 ต.ค. 2569
+    let currentFlowVal = 2500;
+    let currentC2Val = 2416;
     let base64PhotoString = '';
     const ADMIN_PASS = "22122531";
     const customPinsData = {};
@@ -451,7 +499,7 @@
     const hospitalLayer = L.layerGroup().addTo(map);
     const activeMarkers = {};
 
-    // 0. จุดกล้อง CCTV รอบชัยนาท
+    // จุดกล้อง CCTV รอบชัยนาท
     const cctvStations = [
       { name: "CCTV เขื่อนเจ้าพระยา (ท้ายเขื่อน C.13)", location: "สชป.12 อ.สรรพยา", coords: [15.1583, 100.1830], url: "https://www.thaiwater.net" },
       { name: "CCTV สะพานใหม่สรรพยา (ต.หาดอาษา)", location: "จุดเฝ้าระวังตลิ่งต่ำ อ.สรรพยา", coords: [15.1325, 100.2460], url: "https://www.thaiwater.net" },
@@ -562,7 +610,7 @@
               <p class="text-[9px] text-slate-400">โทร: ${pin.phone}</p>
             </div>
             <button onclick="adminDeletePin('${id}')" class="px-2 py-1 bg-red-600 hover:bg-red-500 text-white rounded text-[10px] font-bold whitespace-nowrap">
-              🗑️ ลบ
+              🗑️️ ลบ
             </button>
           </div>
         `;
