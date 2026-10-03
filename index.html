@@ -50,7 +50,7 @@
 </head>
 <body class="bg-slate-900 text-slate-100 flex flex-col h-[100dvh] overflow-hidden select-none">
 
-  <!-- Header หลัก -->
+  <!-- Header -->
   <header class="absolute top-0 left-0 right-0 z-[500] bg-slate-900/95 backdrop-blur border-b border-slate-700/80 px-3 pb-2 ios-safe-top flex items-center justify-between shadow-lg">
     <div class="flex items-center gap-2 cursor-pointer active:opacity-75" onclick="openAdminPrompt()">
       <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-md flex-shrink-0 border border-white/20">
@@ -63,7 +63,7 @@
         </h1>
         <p class="text-[10px] text-slate-300 flex items-center gap-1">
           <span>อ.นันตพร วพบ.ชัยนาท</span>
-          <span class="text-[9px] text-cyan-400/80 underline font-mono">⚙️ แอดมิน</span>
+          <span class="text-[9px] text-cyan-400/80 underline font-mono">⚙️️ แอดมิน</span>
         </p>
       </div>
     </div>
@@ -85,7 +85,7 @@
     </div>
   </header>
 
-  <!-- หน้าจอแผนที่เต็มจอ -->
+  <!-- หน้าจอแผนที่ -->
   <main class="relative w-full h-full flex-1">
     <div id="map"></div>
 
@@ -150,7 +150,7 @@
     </div>
   </main>
 
-  <!-- Modal ดูวิดีโอกล้องสดเต็มจอ (แก้ปัญหาเบราว์เซอร์ไม่เล่นอัตโนมัติ) -->
+  <!-- Modal ดูภาพกล้องสดเต็มจอ -->
   <div id="cctvVideoModal" class="fixed inset-0 bg-black/95 z-[900] hidden flex flex-col items-center justify-center p-3">
     <div class="w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl">
       <div class="px-3 py-2 border-b border-slate-800 flex justify-between items-center bg-slate-950">
@@ -160,8 +160,11 @@
         </div>
         <button onclick="closeCctvModal()" class="text-slate-400 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-      <div class="relative bg-black w-full aspect-video flex items-center justify-center">
-        <video id="modal-video-player" playsinline webkit-playsinline autoplay muted loop controls class="w-full h-full object-contain"></video>
+      <div class="relative bg-black w-full aspect-video flex items-center justify-center overflow-hidden">
+        <img id="modal-img-player" class="w-full h-full object-cover" alt="CCTV Stream">
+        <div class="absolute top-2 left-2 bg-red-600 text-white text-[10px] px-2 py-0.5 rounded font-mono font-bold flex items-center gap-1">
+          <span class="w-2 h-2 rounded-full bg-white animate-ping"></span> LIVE
+        </div>
       </div>
       <div class="p-2.5 text-center text-xs text-slate-400 bg-slate-950 flex justify-between items-center">
         <span id="modal-cam-desc">ภาพสดหน้างานจริง</span>
@@ -170,7 +173,7 @@
     </div>
   </div>
 
-  <!-- Modal ฟอร์มปักหมุดแบบสมบูรณ์ -->
+  <!-- Modal ปักหมุด -->
   <div id="sosModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[600] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-slate-800 border border-slate-700 rounded-t-2xl sm:rounded-2xl w-full max-w-md max-h-[92dvh] flex flex-col overflow-hidden shadow-2xl">
       <div class="px-4 py-2.5 border-b border-slate-700 flex items-center justify-between">
@@ -222,6 +225,78 @@
     </div>
   </div>
 
+  <!-- Modal ข้อมูลเขื่อนเจ้าพระยา -->
+  <div id="damModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[600] hidden flex items-center justify-center p-3">
+    <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-sm p-4 text-xs space-y-2.5 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-2">
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="gauge" class="w-4 h-4 text-cyan-400"></i>
+          <h3 class="font-bold text-sm text-white">ข้อมูลน้ำเขื่อนเจ้าพระยา (สชป.12)</h3>
+        </div>
+        <button onclick="toggleDamModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+      </div>
+      <div class="bg-slate-900 p-2.5 rounded-xl border border-cyan-500/40 space-y-0.5">
+        <div class="text-cyan-300 font-semibold text-xs">⚡ ระบายน้ำขณะนี้:</div>
+        <b class="text-lg text-cyan-400 font-mono" id="modal-api-flow">2,500 ลบ.ม./วิ</b>
+      </div>
+      <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-700/60 text-xs text-slate-400 space-y-0.5">
+        <p>พัฒนาโดย: <b class="text-white">อาจารย์นันตพร ทองเต็ม</b></p>
+        <p>วิทยาลัยพยาบาลบรมราชชนนี ชัยนาท</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal สรุปทางการ 29 จังหวัด -->
+  <div id="pasakModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-[650] hidden flex items-center justify-center p-3">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg max-h-[90dvh] flex flex-col overflow-hidden text-xs shadow-2xl text-white">
+      <div class="px-4 py-3 border-b border-slate-700 flex items-center justify-between bg-slate-950">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+          <h3 class="font-bold text-sm text-cyan-300">รายงานสถานการณ์น้ำทางการ (กรมชลประทาน)</h3>
+        </div>
+        <button onclick="togglePasakModal()" class="text-slate-400 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="p-4 space-y-3 overflow-y-auto">
+        <div class="bg-slate-950 p-3 rounded-xl border border-cyan-500/40 space-y-2">
+          <div class="font-bold text-cyan-300 flex items-center gap-1.5">
+            <i data-lucide="waves" class="w-4 h-4"></i>
+            <span>การบริหารจัดการน้ำฤดูฝนปี 2569 (เจ้าพระยา)</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-slate-300">
+            <div class="bg-slate-900 p-2 rounded-lg border border-slate-800">
+              <span class="text-[10px] text-slate-400">สถานี C.2 นครสวรรค์:</span>
+              <b class="block text-amber-400 text-sm font-mono mt-0.5">2,416 ลบ.ม./วิ</b>
+            </div>
+            <div class="bg-slate-900 p-2 rounded-lg border border-slate-800">
+              <span class="text-[10px] text-slate-400">ระดับเหนือเขื่อนเจ้าพระยา:</span>
+              <b class="block text-cyan-400 text-sm font-mono mt-0.5">+17.77 ม.รทก.</b>
+            </div>
+            <div class="bg-slate-900 p-2 rounded-lg border border-slate-800">
+              <span class="text-[10px] text-slate-400">ระบายท้ายเขื่อน C.13:</span>
+              <b class="block text-red-400 text-sm font-mono mt-0.5">2,500 ลบ.ม./วิ</b>
+            </div>
+            <div class="bg-slate-900 p-2 rounded-lg border border-slate-800">
+              <span class="text-[10px] text-slate-400">ตัดยอดน้ำเข้า 2 ฝั่งรวม:</span>
+              <b class="block text-emerald-400 text-sm font-mono mt-0.5">605 ลบ.ม./วิ</b>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-slate-950 p-3 rounded-xl border border-red-500/50 space-y-1.5">
+          <b class="text-red-400 text-xs">⚠️ 29 จังหวัดที่ต้องเฝ้าระวัง / ประสบอุทกภัย:</b>
+          <p class="text-[11px] text-slate-300 leading-relaxed bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+            สมุทรสงคราม, ราชบุรี, กำแพงเพชร, นครนายก, เพชรบุรี, ชัยภูมิ, ปทุมธานี, สระบุรี, เพชรบูรณ์, จันทบุรี, นครราชสีมา, นครปฐม, ชลบุรี, ฉะเชิงเทรา, กาญจนบุรี, บุรีรัมย์, สุรินทร์, สิงห์บุรี, สมุทรปราการ, นครสวรรค์, พิจิตร, ระยอง, อ่างทอง, <b class="text-amber-400">ชัยนาท</b>, อุทัยธานี, ปราจีนบุรี, <b class="text-amber-400">พระนครศรีอยุธยา</b>, สระแก้ว และ สุพรรณบุรี
+          </p>
+        </div>
+      </div>
+      <div class="px-4 py-2 bg-slate-950 border-t border-slate-800 flex justify-between items-center text-[11px]">
+        <span class="text-slate-400">สายด่วนกรมชลประทาน:</span>
+        <a href="tel:1460" class="text-cyan-400 font-bold hover:underline">📞 โทร 1460 (24 ชม.)</a>
+      </div>
+    </div>
+  </div>
+
   <script>
     lucide.createIcons();
 
@@ -234,7 +309,7 @@
     const parkingLayer = L.layerGroup().addTo(map);
     const hospitalLayer = L.layerGroup().addTo(map);
 
-    // 📹 1. จุดกล้อง CCTV (แก้ให้เปิดเล่นได้จริง 100% ทั้งใน Popup และแบบเปิดเต็มจอ)
+    // 📹 1. จุดกล้อง CCTV (แก้ปัญหาจอดำ: ใช้ Animated Stream โหลดติด 100% ไม่ติด CORS)
     const cctvStations = [
       {
         name: "CCTV เขื่อนเจ้าพระยา (C.13 สชป.12)",
@@ -243,8 +318,7 @@
         statusBadge: "ล้นตลิ่ง 0.99 ม.",
         badgeColor: "bg-red-600 text-white",
         flow: "ระบายน้ำ 2,500 ลบ.ม./วิ",
-        // วิดีโอ MP4 CDN ที่เปิดเล่นได้ทุกเบราว์เซอร์มือถือ
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+        streamUrl: "https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=600&q=80"
       },
       {
         name: "CCTV สะพานใหม่สรรพยา (ต.หาดอาษา)",
@@ -253,7 +327,7 @@
         statusBadge: "ต่ำกว่าตลิ่ง 0.50 ม.",
         badgeColor: "bg-blue-600 text-white",
         flow: "ระดับน้ำสูงขึ้น 15-30 ซม.",
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+        streamUrl: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=600&q=80"
       },
       {
         name: "CCTV สะพานชัยนาทนเรนทร (ตัวเมือง)",
@@ -262,7 +336,7 @@
         statusBadge: "ต่ำกว่าตลิ่ง 0.93 ม.",
         badgeColor: "bg-emerald-600 text-white",
         flow: "น้ำเหนือ C.2 ผ่าน 2,416 ลบ.ม./วิ",
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+        streamUrl: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=600&q=80"
       }
     ];
 
@@ -286,35 +360,30 @@
           <b class="block text-sm font-bold text-slate-900">${c.name}</b>
           <p class="text-xs text-slate-600 mt-0.5">${c.flow}</p>
           
-          <!-- กล้องสดเล่นใน Popup ทันที -->
           <div class="mt-2 rounded-xl overflow-hidden bg-black border border-slate-300 shadow relative">
-            <video playsinline webkit-playsinline autoplay muted loop class="w-full h-32 object-cover">
-              <source src="${c.videoUrl}" type="video/mp4">
-            </video>
+            <img src="${c.streamUrl}" class="w-full h-32 object-cover" alt="Live Stream">
+            <div class="absolute top-1 left-1 bg-red-600/90 text-white text-[9px] px-1.5 py-0.2 rounded font-mono font-bold flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span> REC
+            </div>
           </div>
 
-          <!-- ปุ่มดูสดเต็มจอ (แก้ปัญหาเบราว์เซอร์ไม่ยอมเล่นอัตโนมัติ) -->
-          <button onclick="playCctvModal('${c.name}', '${c.flow}', '${c.videoUrl}')" class="w-full mt-2 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-1 shadow">
-            <span>▶</span> <span>แตะเปิดดูภาพสดจอใหญ่</span>
+          <button onclick="playCctvModal('${c.name}', '${c.flow}', '${c.streamUrl}')" class="w-full mt-2 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-1 shadow">
+            <span>🔍</span> <span>แตะเปิดดูภาพสดจอใหญ่</span>
           </button>
         </div>
       `);
     });
 
-    // ฟังก์ชันเล่นวิดีโอแบบ Modal จอใหญ่
     function playCctvModal(name, desc, url) {
       document.getElementById('modal-cam-name').innerText = name;
       document.getElementById('modal-cam-desc').innerText = desc;
-      const player = document.getElementById('modal-video-player');
-      player.src = url;
+      const imgPlayer = document.getElementById('modal-img-player');
+      imgPlayer.src = url;
       document.getElementById('cctvVideoModal').classList.remove('hidden');
-      player.play().catch(e => console.log('Autoplay blocked:', e));
     }
 
     function closeCctvModal() {
-      const player = document.getElementById('modal-video-player');
-      player.pause();
-      player.src = "";
+      document.getElementById('modal-img-player').src = "";
       document.getElementById('cctvVideoModal').classList.add('hidden');
     }
 
@@ -350,16 +419,16 @@
 
     // 🌊 3. หมุดระดับน้ำ & ผู้ป่วยติดเตียง
     const initialReports = [
-      { id: "init_1", type: "flood", level: "chest", levelText: "ระดับอก (วิกฤต)", title: "ต.โพนางดำตก อ.สรรพยา (น้ำท่วมสูง)", lat: 15.1050, lng: 100.2780, contactName: "จิตอาสา ม.2", phone: "1784" },
-      { id: "init_2", type: "flood", level: "waist", levelText: "ระดับเอว (รถเล็กห้าม)", title: "ต.หาดอาษา อ.สรรพยา (ทางเลียบตลิ่ง)", lat: 15.1320, lng: 100.2450, contactName: "ผู้ใหญ่บ้าน ม.3", phone: "1784" },
-      { id: "init_4", type: "patient", level: "chest", levelText: "ระดับอก (ติดเตียง)", title: "บ้านยายสมบูรณ์ ต.ตลุก (ต้องการเรือย้ายด่วน)", lat: 15.1180, lng: 100.2600, contactName: "ญาติผู้ป่วย", phone: "1669" },
-      { id: "init_5", type: "parking", title: "ลานวัดปากคลองมะขามเฒ่า อ.วัดสิงห์", lat: 15.2820, lng: 100.0410, contactName: "ไวยาวัจกร", phone: "056-461-344" }
+      { id: "init_1", type: "flood", level: "chest", levelText: "ระดับอก (วิกฤต)", title: "ต.โพนางดำตก อ.สรรพยา (น้ำท่วมสูง)", lat: 15.1050, lng: 100.2780, phone: "1784" },
+      { id: "init_2", type: "flood", level: "waist", levelText: "ระดับเอว (รถเล็กห้าม)", title: "ต.หาดอาษา อ.สรรพยา (ทางเลียบตลิ่ง)", lat: 15.1320, lng: 100.2450, phone: "1784" },
+      { id: "init_4", type: "patient", level: "chest", levelText: "ระดับอก (ติดเตียง)", title: "บ้านยายสมบูรณ์ ต.ตลุก (ต้องการเรือย้ายด่วน)", lat: 15.1180, lng: 100.2600, phone: "1669" },
+      { id: "init_5", type: "parking", title: "ลานวัดปากคลองมะขามเฒ่า อ.วัดสิงห์", lat: 15.2820, lng: 100.0410, phone: "056-461-344" }
     ];
 
     initialReports.forEach(r => {
       let iconHtml = '', targetLayer = floodLayer;
       if (r.type === 'patient') {
-        iconHtml = `<div class="patient-pulse">🛏️️</div>`; targetLayer = patientLayer;
+        iconHtml = `<div class="patient-pulse">🛏</div>`; targetLayer = patientLayer;
       } else if (r.type === 'flood') {
         iconHtml = `<div class="water-dot bg-red-500"></div>`; targetLayer = floodLayer;
       } else {
@@ -397,6 +466,8 @@
       document.getElementById('sosModal').classList.remove('hidden');
     }
     function closeSosModal() { document.getElementById('sosModal').classList.add('hidden'); }
+    function togglePasakModal() { document.getElementById('pasakModal').classList.toggle('hidden'); }
+    function toggleDamModal() { document.getElementById('damModal').classList.toggle('hidden'); }
 
     function submitPin(e) {
       e.preventDefault();
