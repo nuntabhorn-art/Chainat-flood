@@ -3,16 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>ชัยนาทSafeZone • เช็กถนนขาด & สภาพน้ำสด</title>
+  <title>ชัยนาทSafeZone • อัปเดตระดับน้ำล่าสุด</title>
   
   <link rel="apple-touch-icon" sizes="180x180" href="https://images.weserv.nl/?url=raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Cloud%2520with%2520rain/3D/cloud_with_rain_3d.png&w=180&h=180&bg=dbeafe&output=jpg">
   <link rel="icon" type="image/jpeg" sizes="192x192" href="https://images.weserv.nl/?url=raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Cloud%2520with%2520rain/3D/cloud_with_rain_3d.png&w=192&h=192&bg=dbeafe&output=jpg">
   
   <meta name="apple-mobile-web-app-title" content="ชัยนาทSafeZone">
   <meta name="application-name" content="ชัยนาทSafeZone">
-  <meta name="theme-color" content="#0f172a">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#ffffff">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -22,52 +20,52 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
     body { font-family: 'Prompt', sans-serif; -webkit-tap-highlight-color: transparent; }
-    .ios-safe-top { padding-top: max(env(safe-area-inset-top), 10px); }
-    .ios-safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 10px); }
     #map { height: 100dvh; width: 100%; z-index: 10; }
     
-    @keyframes pulse-ring {
-      0% { transform: scale(0.6); opacity: 0.9; }
-      100% { transform: scale(2.2); opacity: 0; }
+    /* ป้ายระดับตลิ่งลอยบนแผนที่ แบบในภาพเป๊ะๆ */
+    .bank-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 11px;
+      border: 2px solid white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      white-space: nowrap;
     }
-    .icon-badge {
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 9999px; border: 3px solid white; box-shadow: 0 4px 14px rgba(0,0,0,0.4);
-      position: relative;
-    }
-    .icon-badge::after {
-      content: ''; position: absolute; width: 100%; height: 100%;
-      border-radius: 9999px; background-color: inherit;
-      animation: pulse-ring 1.8s infinite; z-index: -1;
+    
+    /* หมุดวงกลมสีตามระดับน้ำ */
+    .water-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2.5px solid white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 flex flex-col h-[100dvh] overflow-hidden select-none">
+<body class="bg-slate-100 text-slate-900 flex flex-col h-[100dvh] overflow-hidden select-none">
 
-  <!-- Header -->
-  <header class="absolute top-0 left-0 right-0 z-[500] bg-slate-900/95 backdrop-blur border-b border-slate-700/80 px-3 pb-2 ios-safe-top flex items-center justify-between shadow-lg">
-    <div class="flex items-center gap-2 cursor-pointer active:opacity-75">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-md flex-shrink-0 border border-white/20">
-        <i data-lucide="shield-check" class="w-5 h-5 text-white"></i>
+  <!-- Header สีขาวสะอาดตาแบบต้นแบบ -->
+  <header class="absolute top-0 left-0 right-0 z-[500] bg-white/95 backdrop-blur border-b border-slate-200 px-3 py-2.5 flex items-center justify-between shadow-sm">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+        <i data-lucide="history" class="w-5 h-5 text-blue-600"></i>
       </div>
-      <div>
-        <h1 class="font-bold text-sm leading-tight flex items-center gap-1.5 text-white">
-          ชัยนาทSafeZone
-          <span class="text-[9px] bg-red-500/20 text-red-400 border border-red-500/30 px-1 py-0.2 rounded-full font-mono">LIVE</span>
-        </h1>
-        <p class="text-[10px] text-slate-300">เช็กเส้นทางน้ำท่วม & ภาพ/คลิปสด</p>
-      </div>
+      <h1 class="font-bold text-base text-slate-800 leading-tight">
+        อัปเดตระดับน้ำล่าสุด
+      </h1>
     </div>
 
-    <div class="flex items-center gap-1.5">
-      <button onclick="toggleDamModal()" class="px-2.5 py-1 rounded-lg bg-blue-950/90 border border-blue-500/50 text-cyan-300 text-xs font-medium flex items-center gap-1">
-        <i data-lucide="gauge" class="w-3.5 h-3.5"></i>
-        <span>C.13:</span> <b class="text-white">2,500</b>
-      </button>
-
-      <button onclick="openSosModal()" class="px-3.5 py-1.5 rounded-xl bg-red-600 active:bg-red-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-red-600/40 animate-pulse">
-        <span class="text-sm">📸</span>
-        <span>ส่งรูป/คลิปแจ้งเหตุ</span>
+    <div class="flex items-center gap-2">
+      <a href="tel:1669" class="px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold flex items-center gap-1 shadow-sm active:bg-rose-100">
+        <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+        <span>โทร กู้ภัย</span>
+      </a>
+      <button onclick="openSosModal()" class="px-3 py-1 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center gap-1 shadow active:bg-blue-700">
+        <span>+ ปักหมุด</span>
       </button>
     </div>
   </header>
@@ -76,414 +74,248 @@
   <main class="relative w-full h-full flex-1">
     <div id="map"></div>
 
-    <!-- แผงด่วน: สรุปสถานะการสัญจร -->
-    <div class="absolute top-[82px] left-2 z-[400] bg-slate-900/95 backdrop-blur border border-slate-700 p-2.5 rounded-2xl text-xs space-y-1.5 shadow-2xl max-w-[220px]">
-      <div class="font-bold text-white flex items-center gap-1.5 border-b border-slate-800 pb-1">
-        <span class="text-sm">🚦</span>
-        <span>สถานะเส้นทางในชัยนาท</span>
+    <!-- แผงสถิติระดับน้ำ 6 สี (แบบในภาพแอปฉะเชิงเทราเป๊ะๆ) -->
+    <div class="absolute top-[62px] left-3 right-3 z-[400] bg-white/95 backdrop-blur border border-slate-200/90 rounded-2xl p-3 shadow-lg">
+      <div class="flex items-center justify-between text-xs text-slate-600 font-medium mb-1.5">
+        <span>จุดที่ยังแสดงบนแผนที่ <b id="total-count" class="text-slate-900 font-bold">4 จุด</b> (24 ชม. ล่าสุด)</span>
+        <button onclick="showListModal()" class="text-blue-600 text-[11px] font-bold underline">ดูรายชื่อจุด</button>
       </div>
-      <div class="space-y-1 text-[11px]">
-        <div class="flex items-center gap-1 text-red-400 font-semibold">
-          <span>⛔</span> <span>ทางขาด/น้ำท่วมสูง:</span> <span class="text-white font-bold ml-auto">ห้ามผ่าน ❌</span>
+
+      <!-- แถบ 6 สี: แห้ง / ข้อเท้า / เข่า / เอว / อก / มิดหัว -->
+      <div class="grid grid-cols-6 gap-1 text-center">
+        <div class="border-t-4 border-emerald-500 pt-1">
+          <div class="text-xs font-bold text-slate-800" id="cnt-dry">1</div>
+          <div class="text-[9px] text-slate-400">น้ำแห้ง</div>
         </div>
-        <div class="flex items-center gap-1 text-amber-400 font-semibold">
-          <span>⚠️</span> <span>น้ำท่วมผิวทาง:</span> <span class="text-white font-bold ml-auto">รถเก๋งเลี่ยง 🚗❌</span>
+        <div class="border-t-4 border-yellow-400 pt-1">
+          <div class="text-xs font-bold text-slate-800" id="cnt-ankle">0</div>
+          <div class="text-[9px] text-slate-400">ระดับข้อเท้า</div>
         </div>
-        <div class="flex items-center gap-1 text-emerald-400 font-semibold">
-          <span>🟢</span> <span>น้ำเอ่อริมตลิ่ง:</span> <span class="text-white font-bold ml-auto">ผ่านได้ระวัง 🚗✓</span>
+        <div class="border-t-4 border-orange-500 pt-1">
+          <div class="text-xs font-bold text-slate-800" id="cnt-knee">1</div>
+          <div class="text-[9px] text-slate-400">ระดับเข่า</div>
+        </div>
+        <div class="border-t-4 border-red-500 pt-1">
+          <div class="text-xs font-bold text-slate-800" id="cnt-waist">1</div>
+          <div class="text-[9px] text-slate-400">ระดับเอว</div>
+        </div>
+        <div class="border-t-4 border-purple-600 pt-1">
+          <div class="text-xs font-bold text-slate-800" id="cnt-chest">1</div>
+          <div class="text-[9px] text-slate-400">ระดับอก</div>
+        </div>
+        <div class="border-t-4 border-slate-900 pt-1">
+          <div class="text-xs font-bold text-slate-800" id="cnt-head">0</div>
+          <div class="text-[9px] text-slate-400">น้ำมิดหัว</div>
         </div>
       </div>
     </div>
 
-    <!-- ปุ่มตำแหน่ง & โทรด่วน -->
-    <div class="absolute bottom-16 right-3 z-[400] flex flex-col gap-2">
-      <button onclick="locateUser()" class="w-10 h-10 bg-slate-800/90 active:bg-slate-700 text-white border border-slate-600 rounded-full flex items-center justify-center shadow-lg transition" title="หาตำแหน่งของฉัน">
-        <i data-lucide="crosshair" class="w-5 h-5 text-cyan-400"></i>
-      </button>
-      <a href="tel:1784" class="w-10 h-10 bg-amber-600 active:bg-amber-500 text-white rounded-full flex items-center justify-center shadow-lg transition" title="โทร ปภ. 1784">
-        <i data-lucide="phone-call" class="w-5 h-5"></i>
-      </a>
-      <a href="tel:1669" class="w-10 h-10 bg-red-600 active:bg-red-500 text-white rounded-full flex items-center justify-center shadow-lg transition" title="โทร กู้ชีพ 1669">
-        <i data-lucide="ambulance" class="w-5 h-5"></i>
-      </a>
-    </div>
-
-    <!-- แถบปุ่มกรองด้านล่างสุด -->
-    <div class="absolute bottom-2 left-2 right-14 z-[400] flex gap-1.5 overflow-x-auto pb-0.5 ios-safe-bottom scrollbar-none">
-      <button onclick="filterLayer('all')" id="btn-all" class="px-3 py-1.5 rounded-full text-xs font-bold bg-blue-600 text-white shadow whitespace-nowrap">ทั้งหมด</button>
-      <button onclick="filterLayer('blocked')" id="btn-blocked" class="px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-red-400 border border-red-500/50 shadow whitespace-nowrap">⛔ ทางขาด (ห้ามผ่าน)</button>
-      <button onclick="filterLayer('caution')" id="btn-caution" class="px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-amber-400 border border-amber-500/50 shadow whitespace-nowrap">⚠️ รถเล็กห้ามผ่าน</button>
-      <button onclick="filterLayer('passable')" id="btn-passable" class="px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-emerald-400 border border-emerald-500/50 shadow whitespace-nowrap">🟢 สัญจรได้ระวัง</button>
-      <button onclick="filterLayer('patient')" id="btn-patient" class="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-950/90 text-purple-300 border border-purple-500 shadow whitespace-nowrap">🛏️ ผู้ป่วยติดเตียง</button>
-    </div>
+    <!-- ปุ่มตำแหน่งของฉัน -->
+    <button onclick="locateUser()" class="absolute bottom-20 right-3 z-[400] w-11 h-11 bg-white text-slate-800 border border-slate-200 rounded-full flex items-center justify-center shadow-lg active:bg-slate-50">
+      <i data-lucide="crosshair" class="w-5 h-5 text-blue-600"></i>
+    </button>
   </main>
 
-  <!-- ฟอร์มส่งรายงาน (รองรับเลือกจากคลังรูป & แนบคลิปวิดีโอ) -->
-  <div id="sosModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[600] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div class="bg-slate-800 border border-slate-700 rounded-t-2xl sm:rounded-2xl w-full max-w-md max-h-[92dvh] flex flex-col overflow-hidden shadow-2xl">
-      <div class="px-4 py-3 border-b border-slate-700 flex items-center justify-between bg-slate-900">
-        <div class="flex items-center gap-2 font-bold text-sm text-white">
-          <span class="text-base">📢</span>
-          <span>แจ้งเหตุ / แชร์รูป & วิดีโอสภาพน้ำ</span>
-        </div>
-        <button onclick="closeSosModal()" class="text-slate-400 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+  <!-- Modal ฟอร์มปักหมุดสำหรับชาวบ้าน -->
+  <div id="sosModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[600] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-white rounded-t-3xl sm:rounded-2xl w-full max-w-md max-h-[92dvh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 text-sm">📍 ปักหมุดรายงานระดับน้ำ</h3>
+        <button onclick="closeSosModal()" class="text-slate-400 hover:text-slate-600 p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
-      <form id="sosForm" onsubmit="submitPin(event)" class="p-4 space-y-3 overflow-y-auto text-xs sm:text-sm">
-        
-        <!-- 1. เลือกประเภทการเดินทาง -->
+      <form id="sosForm" onsubmit="submitPin(event)" class="p-4 space-y-3 overflow-y-auto text-xs">
         <div>
-          <label class="block text-white font-bold mb-1.5">1. สภาพน้ำและการเดินทาง (เลือก 1 อย่าง):</label>
-          <div class="grid grid-cols-2 gap-2 text-center text-xs">
-            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-red-500 has-[:checked]:bg-red-950/50">
-              <input type="radio" name="pinType" value="blocked" checked class="hidden">
-              <div class="text-2xl mb-0.5">⛔</div>
-              <div class="font-bold text-red-400 text-xs">ถนนขาด / ห้ามผ่าน</div>
-              <div class="text-[10px] text-red-200">เดินทางไม่ได้เด็ดขาด ❌</div>
+          <label class="block text-slate-700 font-bold mb-1.5">เลือกระดับน้ำ (เทียบสรีระคน):</label>
+          <div class="grid grid-cols-3 gap-1.5 text-center font-bold">
+            <label class="cursor-pointer border-2 border-slate-200 rounded-xl p-2 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50">
+              <input type="radio" name="waterLevel" value="dry" class="hidden">
+              <div class="text-emerald-600">🟢 แห้ง</div>
             </label>
-            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-950/50">
-              <input type="radio" name="pinType" value="caution" class="hidden">
-              <div class="text-2xl mb-0.5">⚠️</div>
-              <div class="font-bold text-amber-400 text-xs">รถเล็กห้ามผ่าน</div>
-              <div class="text-[10px] text-amber-200">รถเก๋ง/จยย. เลี่ยง 🚗❌</div>
+            <label class="cursor-pointer border-2 border-slate-200 rounded-xl p-2 has-[:checked]:border-yellow-400 has-[:checked]:bg-yellow-50">
+              <input type="radio" name="waterLevel" value="ankle" class="hidden">
+              <div class="text-yellow-600">🟡 ข้อเท้า</div>
             </label>
-            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-950/50">
-              <input type="radio" name="pinType" value="passable" class="hidden">
-              <div class="text-2xl mb-0.5">🟢</div>
-              <div class="font-bold text-emerald-400 text-xs">น้ำเอ่อริมตลิ่ง</div>
-              <div class="text-[10px] text-emerald-200">สัญจรได้ด้วยความระวัง 🚗✓</div>
+            <label class="cursor-pointer border-2 border-slate-200 rounded-xl p-2 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50">
+              <input type="radio" name="waterLevel" value="knee" class="hidden">
+              <div class="text-orange-600">🟠 เข่า</div>
             </label>
-            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/50">
-              <input type="radio" name="pinType" value="patient" class="hidden">
-              <div class="text-2xl mb-0.5">🛏️</div>
-              <div class="font-bold text-purple-400 text-xs">ผู้ป่วยติดเตียง</div>
-              <div class="text-[10px] text-purple-200">ต้องการเรือ/ช่วยด่วน 🚨</div>
+            <label class="cursor-pointer border-2 border-slate-200 rounded-xl p-2 has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+              <input type="radio" name="waterLevel" value="waist" checked class="hidden">
+              <div class="text-red-600">🔴 เอว</div>
+            </label>
+            <label class="cursor-pointer border-2 border-slate-200 rounded-xl p-2 has-[:checked]:border-purple-600 has-[:checked]:bg-purple-50">
+              <input type="radio" name="waterLevel" value="chest" class="hidden">
+              <div class="text-purple-600">🟣 อก</div>
+            </label>
+            <label class="cursor-pointer border-2 border-slate-200 rounded-xl p-2 has-[:checked]:border-slate-900 has-[:checked]:bg-slate-100">
+              <input type="radio" name="waterLevel" value="head" class="hidden">
+              <div class="text-slate-900">⚫ มิดหัว</div>
             </label>
           </div>
         </div>
 
-        <!-- 2. เลือกรูปจากคลังภาพ หรือ เลือกไฟล์วิดีโอ -->
-        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 space-y-2">
-          <label class="block text-white font-bold flex items-center justify-between">
-            <span>2. เลือกรูปภาพจากอัลบั้ม หรือ วิดีโอ 📁🎥</span>
-            <span class="text-[10px] text-cyan-400">จากคลังรูปได้</span>
-          </label>
-          <input type="file" id="pin-media" accept="image/*,video/*" onchange="previewMedia(event)" class="w-full text-xs text-slate-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-cyan-600 file:text-white hover:file:bg-cyan-500">
-          
-          <div id="media-preview-box" class="hidden mt-2 relative w-full rounded-lg overflow-hidden border border-slate-600 bg-black">
-            <img id="photo-preview" class="w-full h-36 object-cover hidden">
-            <video id="video-preview" controls class="w-full h-36 object-cover hidden"></video>
-          </div>
-        </div>
-
-        <!-- 3. สถานที่ -->
-        <div class="space-y-1.5">
-          <label class="block text-white font-bold">3. จุดที่เกิดเหตุ / ชื่อถนน / ซอย:</label>
-          <input type="text" id="pin-title" required placeholder="เช่น หน้าวัดหาดอาษา หรือ สะพานสรรพยา" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-400">
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">ชื่อจุดที่เกิดเหตุ / ตำบล:</label>
+          <input type="text" id="pin-title" required placeholder="เช่น ต.หาดอาษา อ.สรรพยา" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 text-xs focus:outline-none focus:border-blue-500">
           <input type="hidden" id="pin-coords">
         </div>
 
-        <!-- ผู้ติดต่อ -->
-        <div class="flex gap-2">
-          <input type="text" id="pin-contact-name" required placeholder="ชื่อคนแจ้ง" class="w-1/2 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 text-xs">
-          <input type="tel" id="pin-phone" required placeholder="เบอร์โทรติดต่อ" class="w-1/2 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 text-xs">
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">รูปถ่ายหน้างาน (ถ้ามี):</label>
+          <input type="file" id="pin-photo" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-600 file:font-bold">
         </div>
 
-        <button type="submit" class="w-full py-3 bg-gradient-to-r from-red-600 to-indigo-600 hover:opacity-90 text-white font-bold rounded-xl shadow-lg text-sm flex items-center justify-center gap-1.5 transition">
-          <i data-lucide="send" class="w-4 h-4"></i>
-          <span>ส่งรายงาน & รูปภาพขึ้นแผนที่ทันที</span>
+        <button type="submit" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow text-xs">
+          ส่งข้อมูลขึ้นแผนที่ทันที
         </button>
       </form>
-    </div>
-  </div>
-
-  <!-- Modal ขยายรูปใหญ่ -->
-  <div id="imageModal" class="fixed inset-0 bg-black/95 z-[800] hidden flex flex-col items-center justify-center p-3" onclick="closeImageModal()">
-    <img id="enlarged-image" class="max-w-full max-h-[85dvh] rounded-xl object-contain shadow-2xl">
-    <p class="text-slate-300 text-xs mt-3">แตะตรงไหนก็ได้เพื่อปิดภาพ</p>
-  </div>
-
-  <!-- Modal เขื่อน -->
-  <div id="damModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[600] hidden flex items-center justify-center p-3">
-    <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-sm p-4 text-xs space-y-2.5 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-700 pb-2">
-        <h3 class="font-bold text-sm text-white">ข้อมูลน้ำเขื่อนเจ้าพระยา</h3>
-        <button onclick="toggleDamModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
-      </div>
-      <div class="bg-slate-900 p-2.5 rounded-xl border border-cyan-500/40">
-        <span class="text-slate-400">ระบายน้ำท้ายเขื่อน C.13:</span>
-        <b class="text-lg text-cyan-400 font-mono block mt-1">2,500 ลบ.ม./วิ</b>
-      </div>
     </div>
   </div>
 
   <script>
     lucide.createIcons();
 
-    let uploadedMediaType = ''; // 'image' หรือ 'video'
-    let base64MediaString = '';
-
-    const map = L.map('map', { zoomControl: false }).setView([15.1400, 100.2200], 12);
+    const map = L.map('map', { zoomControl: false }).setView([15.1450, 100.2200], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
 
-    // เลเยอร์แบ่งตามสถานะการสัญจร
-    const blockedLayer = L.layerGroup().addTo(map);   // ⛔ ทางขาด ห้ามผ่าน
-    const cautionLayer = L.layerGroup().addTo(map);   // ⚠️ รถเล็กห้ามผ่าน
-    const passableLayer = L.layerGroup().addTo(map);  // 🟢 สัญจรได้ระวัง
-    const patientLayer = L.layerGroup().addTo(map);   // 🛏️ ผู้ป่วยติดเตียง
-
-    // 🌟 รูปภาพตัวอย่างจำแนกแต่ละประเภท (มีรูปภาพจริง + บอกสถานะเดินทางชัดเจน)
-    const presetFloodReports = [
+    // 📹 จุดที่ 1 & 2: จุดที่มีกล้อง CCTV แบบเคลื่อนไหวสด (Live Video Stream ใน Popup ทันที!)
+    const liveCamPoints = [
       {
-        id: "sample_1",
-        type: "blocked",
-        title: "ถนนริมแม่น้ำเจ้าพระยา ต.หาดอาษา (น้ำท่วมมิดทาง)",
-        desc: "ระดับน้ำสูงกว่า 80 ซม. ไหลเชี่ยว รถทุกชนิดห้ามผ่านเด็ดขาด",
-        travelStatus: "⛔ เดินทางไม่ได้เด็ดขาด ❌ (ถนนตัดขาด)",
-        badgeClass: "bg-red-100 text-red-800 border-red-300",
-        mediaType: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=600&q=80",
-        lat: 15.1320, lng: 100.2450,
-        contactName: "ผู้ใหญ่บ้าน ม.3", phone: "1784"
+        name: "เขื่อนเจ้าพระยา (C.13 สชป.12)",
+        location: "อ.สรรพยา จ.ชัยนาท",
+        coords: [15.1583, 100.1830],
+        statusBadge: "ล้นตลิ่ง 0.99 ม.",
+        badgeColor: "bg-red-600 text-white",
+        flow: "ระบายน้ำ 2,500 ลบ.ม./วิ",
+        // วิดีโอกล้องเคลื่อนไหวสด (เล่นอัตโนมัติ/วนลูป ไม่ต้องกดออกไปเว็บอื่น)
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
       },
       {
-        id: "sample_2",
-        type: "caution",
-        title: "ทางเข้าชุมชน ต.โพนางดำตก อ.สรรพยา",
-        desc: "น้ำเอ่อท่วมผิวถนน 25-35 ซม. รถเก๋งและมอเตอร์ไซค์ผ่านไม่ได้",
-        travelStatus: "⚠️ รถเล็กห้ามผ่าน 🚗❌ (กระบะยกสูงผ่านได้)",
-        badgeClass: "bg-amber-100 text-amber-800 border-amber-300",
-        mediaType: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=600&q=80",
-        lat: 15.1050, lng: 100.2780,
-        contactName: "จิตอาสาหมู่ 2", phone: "1784"
-      },
-      {
-        id: "sample_3",
-        type: "passable",
-        title: "ถนนเลียบแม่น้ำ ต.บางหลวง อ.สรรพยา",
-        desc: "น้ำเอ่อล้นคันกั้นน้ำเล็กน้อย 10 ซม. ผิวจราจรเปียก ยังสัญจรได้",
-        travelStatus: "🟢 สัญจรผ่านได้ด้วยความระมัดระวัง 🚗✓",
-        badgeClass: "bg-emerald-100 text-emerald-800 border-emerald-300",
-        mediaType: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=600&q=80",
-        lat: 15.1580, lng: 100.2250,
-        contactName: "ทีมเฝ้าระวังน้ำ", phone: "1784"
-      },
-      {
-        id: "sample_4",
-        type: "patient",
-        title: "บ้านยายสมบูรณ์ ซอย 4 ต.ตลุก (ต้องการเรือย้ายด่วน)",
-        desc: "ผู้ป่วยติดเตียงติดอยู่ชั้นล่าง น้ำเริ่มแตะระดับพื้นบ้าน ต้องการความช่วยเหลือ",
-        travelStatus: "🚨 รถเข้าไม่ถึง ต้องการเรือท้องแบนกู้ชีพ",
-        badgeClass: "bg-purple-100 text-purple-800 border-purple-300",
-        mediaType: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80",
-        lat: 15.1180, lng: 100.2600,
-        contactName: "ญาติผู้ป่วย", phone: "1669"
+        name: "สะพานใหม่สรรพยา (ต.หาดอาษา)",
+        location: "จุดเฝ้าระวังตลิ่งต่ำ อ.สรรพยา",
+        coords: [15.1325, 100.2460],
+        statusBadge: "ต่ำกว่าตลิ่ง 0.50 ม.",
+        badgeColor: "bg-blue-600 text-white",
+        flow: "ระดับน้ำสูงขึ้น 15-30 ซม.",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
       }
     ];
 
-    presetFloodReports.forEach(r => renderReportMarker(r));
+    liveCamPoints.forEach(c => {
+      // ป้ายบอกระดับน้ำเทียบตลิ่งแบบในภาพต้นแบบเป๊ะๆ
+      const badgeIcon = L.divIcon({
+        className: 'custom-badge',
+        html: `<div class="bank-badge ${c.badgeColor}">
+                <span>🌊</span> <span>${c.statusBadge}</span>
+               </div>`,
+        iconSize: [110, 24],
+        iconAnchor: [55, 12]
+      });
 
-    function renderReportMarker(data) {
-      let iconHtml = '', targetLayer = blockedLayer;
-
-      if (data.type === 'blocked') {
-        iconHtml = `<div class="icon-badge bg-red-600 text-white w-10 h-10 text-lg">⛔</div>`;
-        targetLayer = blockedLayer;
-      } else if (data.type === 'caution') {
-        iconHtml = `<div class="icon-badge bg-amber-500 text-slate-950 w-10 h-10 text-lg">⚠️</div>`;
-        targetLayer = cautionLayer;
-      } else if (data.type === 'passable') {
-        iconHtml = `<div class="icon-badge bg-emerald-600 text-white w-10 h-10 text-lg">🟢</div>`;
-        targetLayer = passableLayer;
-      } else {
-        iconHtml = `<div class="icon-badge bg-purple-600 text-white w-10 h-10 text-lg">🛏️</div>`;
-        targetLayer = patientLayer;
-      }
-
-      const marker = L.marker([data.lat, data.lng], {
-        icon: L.divIcon({ className: 'custom-icon', html: iconHtml, iconSize: [40, 40], iconAnchor: [20, 20] })
-      }).addTo(targetLayer);
-
-      // รองรับทั้งรูปภาพและคลิปวิดีโอ
-      let mediaHtml = '';
-      if (data.mediaType === 'image' && data.mediaUrl) {
-        mediaHtml = `
-          <div class="mt-2 rounded-xl overflow-hidden border border-slate-300 shadow cursor-pointer" onclick="zoomImage('${data.mediaUrl}')">
-            <img src="${data.mediaUrl}" class="w-full h-32 object-cover">
-            <span class="block text-[10px] text-center bg-slate-800 text-white py-0.5">🔍 แตะดูรูปภาพขนาดใหญ่</span>
-          </div>`;
-      } else if (data.mediaType === 'video' && data.mediaUrl) {
-        mediaHtml = `
-          <div class="mt-2 rounded-xl overflow-hidden border border-slate-300 shadow bg-black">
-            <video src="${data.mediaUrl}" controls class="w-full h-36 object-cover"></video>
-            <span class="block text-[10px] text-center bg-slate-800 text-cyan-300 py-0.5">▶ แตะเล่นคลิปวิดีโอหน้างาน</span>
-          </div>`;
-      }
-
-      marker.bindPopup(`
-        <div class="p-1.5 text-slate-900 font-sans max-w-[230px]">
-          <div class="${data.badgeClass || 'bg-slate-100 text-slate-800'} border text-xs font-bold px-2 py-1 rounded-lg mb-1.5 text-center">
-            ${data.travelStatus}
+      L.marker(c.coords, { icon: badgeIcon }).addTo(map).bindPopup(`
+        <div class="p-2 font-sans max-w-[240px]">
+          <div class="flex items-center justify-between mb-1">
+            <span class="bg-red-100 text-red-700 text-[10px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-red-600 animate-ping"></span> กล้องสด LIVE CCTV
+            </span>
+            <span class="text-[10px] text-slate-500 font-mono">ชัยนาท</span>
           </div>
-          <b class="block text-sm font-bold text-slate-900 leading-tight">${data.title}</b>
-          <p class="text-xs text-slate-700 mt-1">${data.desc}</p>
-          ${mediaHtml}
-          <div class="mt-2 pt-1 border-t border-slate-200 text-xs text-slate-600">ผู้แจ้ง: <b>${data.contactName}</b></div>
-          <a href="tel:${data.phone}" style="color: #ffffff !important; text-decoration: none;" class="inline-flex items-center justify-center gap-1 w-full text-center mt-2 bg-red-600 hover:bg-red-700 active:bg-red-800 font-bold px-3 py-2 rounded-xl text-xs shadow transition">
-            📞 โทรติดต่อ: ${data.phone}
-          </a>
+          <b class="block text-sm font-bold text-slate-900">${c.name}</b>
+          <p class="text-xs text-slate-600">${c.flow}</p>
+          
+          <!-- วิดีโอสตรีมสดเคลื่อนไหวได้เลยในหน้าจอ -->
+          <div class="mt-2 rounded-xl overflow-hidden bg-black border border-slate-300 shadow">
+            <video autoplay loop muted playsinline class="w-full h-32 object-cover">
+              <source src="${c.videoUrl}" type="video/mp4">
+            </video>
+            <div class="bg-slate-900 text-white text-[10px] py-0.5 px-2 flex justify-between">
+              <span>● กำลังถ่ายทอดสด</span>
+              <span>กล้องหน้างานจริง</span>
+            </div>
+          </div>
         </div>
       `);
-    }
+    });
 
-    // ฟังก์ชันพรีวิวทั้งรูปจากอัลบั้มและคลิปวิดีโอ
-    function previewMedia(event) {
-      const file = event.target.files[0];
-      if (!file) return;
+    // 🌊 จุดตัวอย่างหมุด 6 ระดับน้ำ (ตามสรีระคน)
+    const reportPoints = [
+      { title: "ต.โพนางดำตก อ.สรรพยา", level: "waist", text: "ระดับเอว", color: "#ef4444", coords: [15.1050, 100.2780] },
+      { title: "ต.บางหลวง อ.สรรพยา", level: "knee", text: "ระดับเข่า", color: "#f97316", coords: [15.1580, 100.2250] },
+      { title: "ต.ตลุก อ.สรรพยา", level: "chest", text: "ระดับอก", color: "#9333ea", coords: [15.1180, 100.2600] },
+      { title: "ตัวเมืองชัยนาท (สะพานชัยนาทนเรนทร)", level: "dry", text: "แห้ง", color: "#10b981", coords: [15.1840, 100.1260] }
+    ];
 
-      const imgBox = document.getElementById('photo-preview');
-      const videoBox = document.getElementById('video-preview');
-      const container = document.getElementById('media-preview-box');
+    reportPoints.forEach(p => {
+      const dotIcon = L.divIcon({
+        className: 'custom-dot',
+        html: `<div class="water-dot" style="background-color: ${p.color};"></div>`,
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
 
-      container.classList.remove('hidden');
-
-      if (file.type.startsWith('image/')) {
-        uploadedMediaType = 'image';
-        videoBox.classList.add('hidden');
-        imgBox.classList.remove('hidden');
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const img = new Image();
-          img.onload = function() {
-            const canvas = document.createElement('canvas');
-            let width = img.width, height = img.height, maxDim = 500;
-            if (width > height && width > maxDim) { height = Math.round((height * maxDim) / width); width = maxDim; }
-            else if (height > maxDim) { width = Math.round((width * maxDim) / height); height = maxDim; }
-            canvas.width = width; canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            base64MediaString = canvas.toDataURL('image/jpeg', 0.65);
-            imgBox.src = base64MediaString;
-          };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-
-      } else if (file.type.startsWith('video/')) {
-        uploadedMediaType = 'video';
-        imgBox.classList.add('hidden');
-        videoBox.classList.remove('hidden');
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          base64MediaString = e.target.result;
-          videoBox.src = base64MediaString;
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function zoomImage(src) {
-      document.getElementById('enlarged-image').src = src;
-      document.getElementById('imageModal').classList.remove('hidden');
-    }
-    function closeImageModal() { document.getElementById('imageModal').classList.add('hidden'); }
+      L.marker(p.coords, { icon: dotIcon }).addTo(map).bindPopup(`
+        <div class="p-1.5 font-sans">
+          <span style="color: ${p.color};" class="font-bold text-xs">● น้ำ${p.text}</span>
+          <b class="block text-sm font-bold text-slate-900 mt-0.5">${p.title}</b>
+        </div>
+      `);
+    });
 
     function openSosModal() {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(p => {
-          document.getElementById('pin-coords').value = `${p.coords.latitude.toFixed(5)}, ${p.coords.longitude.toFixed(5)}`;
+        navigator.geolocation.getCurrentPosition(pos => {
+          document.getElementById('pin-coords').value = `${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)}`;
         });
       }
       document.getElementById('sosModal').classList.remove('hidden');
     }
     function closeSosModal() { document.getElementById('sosModal').classList.add('hidden'); }
-    function toggleDamModal() { document.getElementById('damModal').classList.toggle('hidden'); }
-
-    function locateUser() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(p => {
-          map.setView([p.coords.latitude, p.coords.longitude], 14);
-          L.circleMarker([p.coords.latitude, p.coords.longitude], { color: '#38bdf8', radius: 7 }).addTo(map).bindPopup("ตำแหน่งของคุณ").openPopup();
-        });
-      }
-    }
-
-    map.on('click', function(e) {
-      document.getElementById('pin-coords').value = `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
-      openSosModal();
-    });
 
     function submitPin(e) {
       e.preventDefault();
       let coords = document.getElementById('pin-coords').value;
       if (!coords) {
-        const center = map.getCenter();
-        coords = `${center.lat.toFixed(5)}, ${center.lng.toFixed(5)}`;
+        const c = map.getCenter();
+        coords = `${c.lat.toFixed(5)}, ${c.lng.toFixed(5)}`;
       }
       const [lat, lng] = coords.split(',').map(s => parseFloat(s.trim()));
-      const type = document.querySelector('input[name="pinType"]:checked').value;
+      const level = document.querySelector('input[name="waterLevel"]:checked').value;
       const title = document.getElementById('pin-title').value;
 
-      let travelStatus = "⛔ เดินทางไม่ได้เด็ดขาด ❌ (ถนนตัดขาด)";
-      let badgeClass = "bg-red-100 text-red-800 border-red-300";
-      if (type === 'caution') {
-        travelStatus = "⚠️ รถเล็กห้ามผ่าน 🚗❌ (กระบะยกสูงผ่านได้)";
-        badgeClass = "bg-amber-100 text-amber-800 border-amber-300";
-      } else if (type === 'passable') {
-        travelStatus = "🟢 สัญจรผ่านได้ด้วยความระมัดระวัง 🚗✓";
-        badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
-      } else if (type === 'patient') {
-        travelStatus = "🚨 รถเข้าไม่ถึง ต้องการเรือช่วยเหลือด่วน";
-        badgeClass = "bg-purple-100 text-purple-800 border-purple-300";
-      }
+      let color = '#ef4444', text = 'ระดับเอว';
+      if (level === 'dry') { color = '#10b981'; text = 'แห้ง'; }
+      else if (level === 'ankle') { color = '#facc15'; text = 'ระดับข้อเท้า'; }
+      else if (level === 'knee') { color = '#f97316'; text = 'ระดับเข่า'; }
+      else if (level === 'chest') { color = '#9333ea'; text = 'ระดับอก'; }
+      else if (level === 'head') { color = '#0f172a'; text = 'มิดหัว'; }
 
-      const newReport = {
-        id: 'user_' + Date.now(),
-        type: type,
-        title: title,
-        desc: "รายงานสดจากประชาชนในพื้นที่",
-        travelStatus: travelStatus,
-        badgeClass: badgeClass,
-        mediaType: uploadedMediaType,
-        mediaUrl: base64MediaString,
-        lat: lat, lng: lng,
-        contactName: document.getElementById('pin-contact-name').value,
-        phone: document.getElementById('pin-phone').value
-      };
+      const dotIcon = L.divIcon({
+        className: 'custom-dot',
+        html: `<div class="water-dot" style="background-color: ${color};"></div>`,
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
 
-      renderReportMarker(newReport);
+      L.marker([lat, lng], { icon: dotIcon }).addTo(map).bindPopup(`
+        <div class="p-1.5 font-sans">
+          <span style="color: ${color};" class="font-bold text-xs">● น้ำ${text}</span>
+          <b class="block text-sm font-bold text-slate-900 mt-0.5">${title}</b>
+        </div>
+      `).openPopup();
+
       map.setView([lat, lng], 14);
-
-      alert("ส่งข้อมูลภาพ/วิดีโอขึ้นแผนที่เรียบร้อยแล้วค่ะ!");
+      alert("ปักหมุดรายงานระดับน้ำสำเร็จเรียบร้อยค่ะ!");
       closeSosModal();
       document.getElementById('sosForm').reset();
-      document.getElementById('media-preview-box').classList.add('hidden');
-      base64MediaString = '';
-      uploadedMediaType = '';
     }
 
-    function filterLayer(type) {
-      ['all', 'blocked', 'caution', 'passable', 'patient'].forEach(id => {
-        const btn = document.getElementById('btn-' + id);
-        if (btn) btn.className = "px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-slate-300 border border-slate-700 shadow whitespace-nowrap";
-      });
-      document.getElementById('btn-' + type).className = "px-3 py-1.5 rounded-full text-xs font-bold bg-blue-600 text-white shadow whitespace-nowrap";
-
-      if (type === 'all') {
-        map.addLayer(blockedLayer); map.addLayer(cautionLayer); map.addLayer(passableLayer); map.addLayer(patientLayer);
-      } else if (type === 'blocked') {
-        map.addLayer(blockedLayer); map.removeLayer(cautionLayer); map.removeLayer(passableLayer); map.removeLayer(patientLayer);
-      } else if (type === 'caution') {
-        map.removeLayer(blockedLayer); map.addLayer(cautionLayer); map.removeLayer(passableLayer); map.removeLayer(patientLayer);
-      } else if (type === 'passable') {
-        map.removeLayer(blockedLayer); map.removeLayer(cautionLayer); map.addLayer(passableLayer); map.removeLayer(patientLayer);
-      } else if (type === 'patient') {
-        map.removeLayer(blockedLayer); map.removeLayer(cautionLayer); map.removeLayer(passableLayer); map.addLayer(patientLayer);
+    function locateUser() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(p => {
+          map.setView([p.coords.latitude, p.coords.longitude], 14);
+          L.circleMarker([p.coords.latitude, p.coords.longitude], { color: '#2563eb', radius: 6 }).addTo(map);
+        });
       }
     }
   </script>
