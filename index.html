@@ -30,26 +30,15 @@
       0% { transform: scale(0.6); opacity: 0.9; }
       100% { transform: scale(2.2); opacity: 0; }
     }
-    
-    /* หมุดสัญลักษณ์ขนาดใหญ่ ชัดเจนตาชาวบ้าน */
     .icon-badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 9999px;
-      border: 3px solid white;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 9999px; border: 3px solid white; box-shadow: 0 4px 14px rgba(0,0,0,0.4);
       position: relative;
     }
     .icon-badge::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 9999px;
-      background-color: inherit;
-      animation: pulse-ring 1.8s infinite;
-      z-index: -1;
+      content: ''; position: absolute; width: 100%; height: 100%;
+      border-radius: 9999px; background-color: inherit;
+      animation: pulse-ring 1.8s infinite; z-index: -1;
     }
   </style>
 </head>
@@ -57,7 +46,7 @@
 
   <!-- Header -->
   <header class="absolute top-0 left-0 right-0 z-[500] bg-slate-900/95 backdrop-blur border-b border-slate-700/80 px-3 pb-2 ios-safe-top flex items-center justify-between shadow-lg">
-    <div class="flex items-center gap-2 cursor-pointer active:opacity-75" onclick="openAdminPrompt()">
+    <div class="flex items-center gap-2 cursor-pointer active:opacity-75">
       <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-md flex-shrink-0 border border-white/20">
         <i data-lucide="shield-check" class="w-5 h-5 text-white"></i>
       </div>
@@ -66,42 +55,43 @@
           ชัยนาทSafeZone
           <span class="text-[9px] bg-red-500/20 text-red-400 border border-red-500/30 px-1 py-0.2 rounded-full font-mono">LIVE</span>
         </h1>
-        <p class="text-[10px] text-slate-300 flex items-center gap-1">
-          <span>เช็กถนนขาด & ภาพน้ำสด</span>
-          <span class="text-[9px] text-cyan-400/80 underline font-mono">⚙️ แอดมิน</span>
-        </p>
+        <p class="text-[10px] text-slate-300">เช็กเส้นทางน้ำท่วม & ภาพ/คลิปสด</p>
       </div>
     </div>
 
     <div class="flex items-center gap-1.5">
       <button onclick="toggleDamModal()" class="px-2.5 py-1 rounded-lg bg-blue-950/90 border border-blue-500/50 text-cyan-300 text-xs font-medium flex items-center gap-1">
         <i data-lucide="gauge" class="w-3.5 h-3.5"></i>
-        <span>C.13:</span> <b id="header-flow" class="text-white">2,500</b>
+        <span>C.13:</span> <b class="text-white">2,500</b>
       </button>
 
       <button onclick="openSosModal()" class="px-3.5 py-1.5 rounded-xl bg-red-600 active:bg-red-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-red-600/40 animate-pulse">
         <span class="text-sm">📸</span>
-        <span>แจ้งเหตุ/แชร์รูป</span>
+        <span>ส่งรูป/คลิปแจ้งเหตุ</span>
       </button>
     </div>
   </header>
 
-  <!-- หน้าจอแผนที่เต็มจอ -->
+  <!-- หน้าจอแผนที่ -->
   <main class="relative w-full h-full flex-1">
     <div id="map"></div>
 
-    <!-- แถบด่วน: สรุปสถานะการเดินทางมุมซ้ายบน -->
-    <div class="absolute top-[82px] left-2 z-[400] bg-slate-900/95 backdrop-blur border border-slate-700 p-2.5 rounded-2xl text-xs space-y-1 shadow-2xl max-w-[210px]">
-      <div class="font-bold text-white flex items-center gap-1 text-[11px] border-b border-slate-800 pb-1">
-        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-red-400"></i>
+    <!-- แผงด่วน: สรุปสถานะการสัญจร -->
+    <div class="absolute top-[82px] left-2 z-[400] bg-slate-900/95 backdrop-blur border border-slate-700 p-2.5 rounded-2xl text-xs space-y-1.5 shadow-2xl max-w-[220px]">
+      <div class="font-bold text-white flex items-center gap-1.5 border-b border-slate-800 pb-1">
+        <span class="text-sm">🚦</span>
         <span>สถานะเส้นทางในชัยนาท</span>
       </div>
-      <div class="flex justify-between items-center text-slate-300 pt-0.5">
-        <span>ระบาย C.13:</span>
-        <b class="text-cyan-400 font-mono" id="card-c13">2,500 ลบ.ม./วิ</b>
-      </div>
-      <div class="text-[10px] text-amber-300 leading-tight pt-1">
-        • ท้ายเขื่อน (สรรพยา) มีน้ำเอ่อล้นถนนริมตลิ่ง รถเล็กโปรดเลี่ยง
+      <div class="space-y-1 text-[11px]">
+        <div class="flex items-center gap-1 text-red-400 font-semibold">
+          <span>⛔</span> <span>ทางขาด/น้ำท่วมสูง:</span> <span class="text-white font-bold ml-auto">ห้ามผ่าน ❌</span>
+        </div>
+        <div class="flex items-center gap-1 text-amber-400 font-semibold">
+          <span>⚠️</span> <span>น้ำท่วมผิวทาง:</span> <span class="text-white font-bold ml-auto">รถเก๋งเลี่ยง 🚗❌</span>
+        </div>
+        <div class="flex items-center gap-1 text-emerald-400 font-semibold">
+          <span>🟢</span> <span>น้ำเอ่อริมตลิ่ง:</span> <span class="text-white font-bold ml-auto">ผ่านได้ระวัง 🚗✓</span>
+        </div>
       </div>
     </div>
 
@@ -118,101 +108,96 @@
       </a>
     </div>
 
-    <!-- แถบปุ่มกรองด้านล่างสุด (เน้นสัญลักษณ์รูปภาพ เข้าใจทันที) -->
+    <!-- แถบปุ่มกรองด้านล่างสุด -->
     <div class="absolute bottom-2 left-2 right-14 z-[400] flex gap-1.5 overflow-x-auto pb-0.5 ios-safe-bottom scrollbar-none">
       <button onclick="filterLayer('all')" id="btn-all" class="px-3 py-1.5 rounded-full text-xs font-bold bg-blue-600 text-white shadow whitespace-nowrap">ทั้งหมด</button>
-      <button onclick="filterLayer('blocked')" id="btn-blocked" class="px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-red-400 border border-red-500/50 shadow whitespace-nowrap">⛔ ถนนขาด / ห้ามผ่าน</button>
-      <button onclick="filterLayer('passable')" id="btn-passable" class="px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-amber-400 border border-amber-500/50 shadow whitespace-nowrap">🚗❌ รถเล็กผ่านไม่ได้</button>
-      <button onclick="filterLayer('cctv')" id="btn-cctv" class="px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-cyan-400 border border-cyan-500/50 shadow whitespace-nowrap">📹 กล้องสด CCTV</button>
+      <button onclick="filterLayer('blocked')" id="btn-blocked" class="px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-red-400 border border-red-500/50 shadow whitespace-nowrap">⛔ ทางขาด (ห้ามผ่าน)</button>
+      <button onclick="filterLayer('caution')" id="btn-caution" class="px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-amber-400 border border-amber-500/50 shadow whitespace-nowrap">⚠️ รถเล็กห้ามผ่าน</button>
+      <button onclick="filterLayer('passable')" id="btn-passable" class="px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-emerald-400 border border-emerald-500/50 shadow whitespace-nowrap">🟢 สัญจรได้ระวัง</button>
       <button onclick="filterLayer('patient')" id="btn-patient" class="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-950/90 text-purple-300 border border-purple-500 shadow whitespace-nowrap">🛏️ ผู้ป่วยติดเตียง</button>
-      <button onclick="filterLayer('parking')" id="btn-parking" class="px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-slate-300 border border-slate-700 shadow whitespace-nowrap">🅿️ จุดฝากรถ</button>
     </div>
   </main>
 
-  <!-- ฟอร์มปักหมุดแบบง่ายสุดๆ สำหรับชาวบ้าน (3 ขั้นตอนเสร็จ) -->
+  <!-- ฟอร์มส่งรายงาน (รองรับเลือกจากคลังรูป & แนบคลิปวิดีโอ) -->
   <div id="sosModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[600] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
     <div class="bg-slate-800 border border-slate-700 rounded-t-2xl sm:rounded-2xl w-full max-w-md max-h-[92dvh] flex flex-col overflow-hidden shadow-2xl">
       <div class="px-4 py-3 border-b border-slate-700 flex items-center justify-between bg-slate-900">
         <div class="flex items-center gap-2 font-bold text-sm text-white">
           <span class="text-base">📢</span>
-          <span>แจ้งเหตุ / แชร์รูปน้ำท่วม (ง่ายใน 1 นาที)</span>
+          <span>แจ้งเหตุ / แชร์รูป & วิดีโอสภาพน้ำ</span>
         </div>
         <button onclick="closeSosModal()" class="text-slate-400 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
       <form id="sosForm" onsubmit="submitPin(event)" class="p-4 space-y-3 overflow-y-auto text-xs sm:text-sm">
         
-        <!-- ขั้นที่ 1: เลือกสัญลักษณ์ภาพขนาดใหญ่ -->
+        <!-- 1. เลือกประเภทการเดินทาง -->
         <div>
-          <label class="block text-white font-bold mb-1.5">1. เลือกสิ่งที่เกิดขึ้น (กดเลือก 1 อย่าง):</label>
+          <label class="block text-white font-bold mb-1.5">1. สภาพน้ำและการเดินทาง (เลือก 1 อย่าง):</label>
           <div class="grid grid-cols-2 gap-2 text-center text-xs">
-            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-red-500 has-[:checked]:bg-red-950/50 transition">
+            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-red-500 has-[:checked]:bg-red-950/50">
               <input type="radio" name="pinType" value="blocked" checked class="hidden">
               <div class="text-2xl mb-0.5">⛔</div>
-              <div class="font-bold text-red-400 text-sm">ถนนขาด / ห้ามผ่าน</div>
-              <div class="text-[10px] text-slate-400">น้ำท่วมสูง รถผ่านไม่ได้</div>
+              <div class="font-bold text-red-400 text-xs">ถนนขาด / ห้ามผ่าน</div>
+              <div class="text-[10px] text-red-200">เดินทางไม่ได้เด็ดขาด ❌</div>
             </label>
-            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-950/50 transition">
-              <input type="radio" name="pinType" value="passable" class="hidden">
+            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-950/50">
+              <input type="radio" name="pinType" value="caution" class="hidden">
               <div class="text-2xl mb-0.5">⚠️</div>
-              <div class="font-bold text-amber-400 text-sm">รถเล็กห้ามผ่าน</div>
-              <div class="text-[10px] text-slate-400">รถกระบะ/ยกสูงผ่านได้</div>
+              <div class="font-bold text-amber-400 text-xs">รถเล็กห้ามผ่าน</div>
+              <div class="text-[10px] text-amber-200">รถเก๋ง/จยย. เลี่ยง 🚗❌</div>
             </label>
-            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/50 transition">
+            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-950/50">
+              <input type="radio" name="pinType" value="passable" class="hidden">
+              <div class="text-2xl mb-0.5">🟢</div>
+              <div class="font-bold text-emerald-400 text-xs">น้ำเอ่อริมตลิ่ง</div>
+              <div class="text-[10px] text-emerald-200">สัญจรได้ด้วยความระวัง 🚗✓</div>
+            </label>
+            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-purple-500 has-[:checked]:bg-purple-950/50">
               <input type="radio" name="pinType" value="patient" class="hidden">
               <div class="text-2xl mb-0.5">🛏️</div>
-              <div class="font-bold text-purple-400 text-sm">ช่วยผู้ป่วยติดเตียง</div>
-              <div class="text-[10px] text-slate-400">ต้องการความช่วยเหลือด่วน</div>
-            </label>
-            <label class="cursor-pointer border-2 border-slate-700 rounded-xl p-2.5 bg-slate-900 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-950/50 transition">
-              <input type="radio" name="pinType" value="parking" class="hidden">
-              <div class="text-2xl mb-0.5">🅿️</div>
-              <div class="font-bold text-blue-400 text-sm">เปิดจุดฝากรถ</div>
-              <div class="text-[10px] text-slate-400">พื้นที่สูงน้ำไม่ท่วม</div>
+              <div class="font-bold text-purple-400 text-xs">ผู้ป่วยติดเตียง</div>
+              <div class="text-[10px] text-purple-200">ต้องการเรือ/ช่วยด่วน 🚨</div>
             </label>
           </div>
         </div>
 
-        <!-- ขั้นที่ 2: ถ่ายรูปหน้างาน (ชาวบ้านชอบฟังก์ชันนี้) -->
-        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 space-y-1.5">
+        <!-- 2. เลือกรูปจากคลังภาพ หรือ เลือกไฟล์วิดีโอ -->
+        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 space-y-2">
           <label class="block text-white font-bold flex items-center justify-between">
-            <span>2. ถ่ายรูปสภาพน้ำท่วม / สภาพทาง (สำคัญมาก) 📸</span>
-            <span class="text-[10px] text-cyan-400">คนอื่นเห็นรูปจะรู้ทันที</span>
+            <span>2. เลือกรูปภาพจากอัลบั้ม หรือ วิดีโอ 📁🎥</span>
+            <span class="text-[10px] text-cyan-400">จากคลังรูปได้</span>
           </label>
-          <input type="file" id="pin-photo" accept="image/*" capture="environment" onchange="previewImage(event)" class="w-full text-xs text-slate-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-cyan-600 file:text-white hover:file:bg-cyan-500">
-          <div id="photo-preview-box" class="hidden mt-2 relative w-full h-36 rounded-lg overflow-hidden border border-slate-600">
-            <img id="photo-preview" class="w-full h-full object-cover">
+          <input type="file" id="pin-media" accept="image/*,video/*" onchange="previewMedia(event)" class="w-full text-xs text-slate-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-cyan-600 file:text-white hover:file:bg-cyan-500">
+          
+          <div id="media-preview-box" class="hidden mt-2 relative w-full rounded-lg overflow-hidden border border-slate-600 bg-black">
+            <img id="photo-preview" class="w-full h-36 object-cover hidden">
+            <video id="video-preview" controls class="w-full h-36 object-cover hidden"></video>
           </div>
         </div>
 
-        <!-- ขั้นที่ 3: ระบุสถานที่ -->
+        <!-- 3. สถานที่ -->
         <div class="space-y-1.5">
           <label class="block text-white font-bold">3. จุดที่เกิดเหตุ / ชื่อถนน / ซอย:</label>
-          <input type="text" id="pin-title" required placeholder="เช่น หน้าวัดหาดอาษา หรือ ถนนเลียบตลิ่งสรรพยา" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-400">
-          
-          <div class="flex gap-1.5 pt-1">
-            <input type="text" id="pin-coords" required readonly placeholder="พิกัดจะขึ้นอัตโนมัติ" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-slate-300 text-xs font-mono">
-            <button type="button" onclick="getFormLocation()" class="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded-lg flex items-center gap-1 font-bold whitespace-nowrap text-xs">
-              <i data-lucide="crosshair" class="w-3.5 h-3.5"></i> ใช้ตำแหน่งฉัน
-            </button>
-          </div>
+          <input type="text" id="pin-title" required placeholder="เช่น หน้าวัดหาดอาษา หรือ สะพานสรรพยา" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-cyan-400">
+          <input type="hidden" id="pin-coords">
         </div>
 
-        <!-- เบอร์โทรติดต่อ -->
+        <!-- ผู้ติดต่อ -->
         <div class="flex gap-2">
-          <input type="text" id="pin-contact-name" required placeholder="ชื่อคนแจ้ง" class="w-1/2 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 text-xs focus:outline-none">
-          <input type="tel" id="pin-phone" required placeholder="เบอร์โทรติดต่อ" class="w-1/2 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 text-xs focus:outline-none">
+          <input type="text" id="pin-contact-name" required placeholder="ชื่อคนแจ้ง" class="w-1/2 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 text-xs">
+          <input type="tel" id="pin-phone" required placeholder="เบอร์โทรติดต่อ" class="w-1/2 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-slate-200 text-xs">
         </div>
 
-        <button type="submit" class="w-full py-3 bg-gradient-to-r from-red-600 via-purple-600 to-indigo-600 hover:opacity-90 text-white font-bold rounded-xl shadow-lg text-sm flex items-center justify-center gap-1.5 transition">
+        <button type="submit" class="w-full py-3 bg-gradient-to-r from-red-600 to-indigo-600 hover:opacity-90 text-white font-bold rounded-xl shadow-lg text-sm flex items-center justify-center gap-1.5 transition">
           <i data-lucide="send" class="w-4 h-4"></i>
-          <span>ส่งรูป & ปักหมุดขึ้นแผนที่ทันที</span>
+          <span>ส่งรายงาน & รูปภาพขึ้นแผนที่ทันที</span>
         </button>
       </form>
     </div>
   </div>
 
-  <!-- Modal ดูภาพขยายขนาดใหญ่ (Photo Zoom Modal) -->
+  <!-- Modal ขยายรูปใหญ่ -->
   <div id="imageModal" class="fixed inset-0 bg-black/95 z-[800] hidden flex flex-col items-center justify-center p-3" onclick="closeImageModal()">
     <img id="enlarged-image" class="max-w-full max-h-[85dvh] rounded-xl object-contain shadow-2xl">
     <p class="text-slate-300 text-xs mt-3">แตะตรงไหนก็ได้เพื่อปิดภาพ</p>
@@ -222,22 +207,12 @@
   <div id="damModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[600] hidden flex items-center justify-center p-3">
     <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-sm p-4 text-xs space-y-2.5 shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-700 pb-2">
-        <div class="flex items-center gap-1.5">
-          <i data-lucide="gauge" class="w-4 h-4 text-cyan-400"></i>
-          <h3 class="font-bold text-sm text-white">ข้อมูลน้ำเขื่อนเจ้าพระยา</h3>
-        </div>
+        <h3 class="font-bold text-sm text-white">ข้อมูลน้ำเขื่อนเจ้าพระยา</h3>
         <button onclick="toggleDamModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
       </div>
-      <div class="bg-slate-900 p-2.5 rounded-xl border border-cyan-500/40 space-y-0.5">
-        <div class="text-cyan-300 font-semibold text-xs">⚡ ระบายน้ำท้ายเขื่อน C.13:</div>
-        <div class="flex justify-between items-baseline pt-1">
-          <span class="text-slate-400">ขณะนี้:</span>
-          <b class="text-lg text-cyan-400 font-mono">2,500 <span class="text-xs font-normal text-slate-400">ลบ.ม./วิ</span></b>
-        </div>
-      </div>
-      <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-700/60 text-xs text-slate-400">
-        <p>พัฒนาโดย: <b class="text-white">อาจารย์นันตพร ทองเต็ม</b></p>
-        <p>วิทยาลัยพยาบาลบรมราชชนนี ชัยนาท</p>
+      <div class="bg-slate-900 p-2.5 rounded-xl border border-cyan-500/40">
+        <span class="text-slate-400">ระบายน้ำท้ายเขื่อน C.13:</span>
+        <b class="text-lg text-cyan-400 font-mono block mt-1">2,500 ลบ.ม./วิ</b>
       </div>
     </div>
   </div>
@@ -245,119 +220,117 @@
   <script>
     lucide.createIcons();
 
-    let currentFlowVal = 2500;
-    let base64PhotoString = '';
-    const ADMIN_PASS = "22122531";
+    let uploadedMediaType = ''; // 'image' หรือ 'video'
+    let base64MediaString = '';
 
-    const map = L.map('map', { zoomControl: false }).setView([15.1550, 100.2000], 12);
+    const map = L.map('map', { zoomControl: false }).setView([15.1400, 100.2200], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
 
-    // เลเยอร์จัดกลุ่มตามการใช้งานจริง
-    const blockedLayer = L.layerGroup().addTo(map);   // ⛔ ถนนขาด
-    const passableLayer = L.layerGroup().addTo(map);  // ⚠️ รถเล็กห้ามผ่าน
-    const cctvLayer = L.layerGroup().addTo(map);      // 📹 กล้อง CCTV
+    // เลเยอร์แบ่งตามสถานะการสัญจร
+    const blockedLayer = L.layerGroup().addTo(map);   // ⛔ ทางขาด ห้ามผ่าน
+    const cautionLayer = L.layerGroup().addTo(map);   // ⚠️ รถเล็กห้ามผ่าน
+    const passableLayer = L.layerGroup().addTo(map);  // 🟢 สัญจรได้ระวัง
     const patientLayer = L.layerGroup().addTo(map);   // 🛏️ ผู้ป่วยติดเตียง
-    const parkingLayer = L.layerGroup().addTo(map);   // 🅿️ จุดฝากรถ
 
-    const activeMarkers = {};
-
-    // 1. หมุดกล้อง CCTV สดรอบชัยนาท (ลิงก์ตรง)
-    const cctvStations = [
-      { name: "CCTV ท้ายเขื่อนเจ้าพระยา (C.13)", location: "สชป.12 อ.สรรพยา", coords: [15.1583, 100.1830], url: "http://www.thaiwater.net/v3/telemetry/station/C.13" },
-      { name: "CCTV สะพานใหม่สรรพยา", location: "ต.หาดอาษา อ.สรรพยา", coords: [15.1325, 100.2460], url: "http://mekong.dwr.go.th/cctv/" },
-      { name: "CCTV สะพานชัยนาทนเรนทร", location: "ตัวเมืองชัยนาท", coords: [15.1840, 100.1260], url: "http://www.thaiwater.net/v3/telemetry/station/C.2" },
-      { name: "CCTV ประตูน้ำบรมธาตุ", location: "แม่น้ำน้อย อ.เมืองฯ", coords: [15.1530, 100.1650], url: "http://rid.go.th" }
-    ];
-
-    cctvStations.forEach(cam => {
-      L.marker(cam.coords, {
-        icon: L.divIcon({
-          className: 'custom-icon',
-          html: `<div class="icon-badge bg-cyan-600 text-white w-9 h-9 text-base">📹</div>`,
-          iconSize: [36, 36], iconAnchor: [18, 18]
-        })
-      }).addTo(cctvLayer).bindPopup(`
-        <div class="p-2 text-slate-900 font-sans max-w-[220px]">
-          <span class="bg-cyan-100 text-cyan-800 text-[10px] font-bold px-1.5 py-0.5 rounded">📹 กล้องสด CCTV</span>
-          <b class="block text-sm font-bold text-slate-900 mt-1">${cam.name}</b>
-          <p class="text-xs text-slate-600 mt-0.5">${cam.location}</p>
-          <a href="${cam.url}" target="_blank" rel="noopener noreferrer" style="color: #ffffff !important; text-decoration: none;" class="inline-flex items-center justify-center gap-1 w-full mt-2 bg-cyan-600 hover:bg-cyan-700 active:bg-cyan-800 font-bold px-3 py-2 rounded-xl text-xs shadow-md transition">
-            📹 แตะเปิดดูภาพกล้องสด
-          </a>
-        </div>
-      `);
-    });
-
-    // 2. ข้อมูลตัวอย่างเริ่มต้น: จุดถนนขาด & น้ำท่วมสูงท้ายเขื่อน (ให้ชาวบ้านเห็นตัวอย่างทันที)
-    const initialHazardPoints = [
+    // 🌟 รูปภาพตัวอย่างจำแนกแต่ละประเภท (มีรูปภาพจริง + บอกสถานะเดินทางชัดเจน)
+    const presetFloodReports = [
       {
-        id: "sample_blocked_1",
+        id: "sample_1",
         type: "blocked",
-        title: "ถนนริมแม่น้ำเจ้าพระยา ต.หาดอาษา (น้ำท่วมสูง)",
+        title: "ถนนริมแม่น้ำเจ้าพระยา ต.หาดอาษา (น้ำท่วมมิดทาง)",
+        desc: "ระดับน้ำสูงกว่า 80 ซม. ไหลเชี่ยว รถทุกชนิดห้ามผ่านเด็ดขาด",
+        travelStatus: "⛔ เดินทางไม่ได้เด็ดขาด ❌ (ถนนตัดขาด)",
+        badgeClass: "bg-red-100 text-red-800 border-red-300",
+        mediaType: "image",
+        mediaUrl: "https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=600&q=80",
         lat: 15.1320, lng: 100.2450,
-        statusText: "⛔ ถนนขาด / ห้ามสัญจรผ่านเด็ดขาด",
-        desc: "ระดับน้ำเอ่อล้นคันกั้นน้ำ สูงกว่า 80 ซม. กระแสน้ำเชี่ยว",
         contactName: "ผู้ใหญ่บ้าน ม.3", phone: "1784"
       },
       {
-        id: "sample_passable_1",
-        type: "passable",
-        title: "ซอยริมตลิ่ง ต.โพนางดำตก อ.สรรพยา",
+        id: "sample_2",
+        type: "caution",
+        title: "ทางเข้าชุมชน ต.โพนางดำตก อ.สรรพยา",
+        desc: "น้ำเอ่อท่วมผิวถนน 25-35 ซม. รถเก๋งและมอเตอร์ไซค์ผ่านไม่ได้",
+        travelStatus: "⚠️ รถเล็กห้ามผ่าน 🚗❌ (กระบะยกสูงผ่านได้)",
+        badgeClass: "bg-amber-100 text-amber-800 border-amber-300",
+        mediaType: "image",
+        mediaUrl: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=600&q=80",
         lat: 15.1050, lng: 100.2780,
-        statusText: "⚠️ รถเล็กห้ามผ่าน / รถยกสูงผ่านได้",
-        desc: "น้ำท่วมผิวจราจร 20-30 ซม. มอเตอร์ไซค์และรถเก๋งโปรดเลี่ยง",
-        contactName: "จิตอาสาชุมชน", phone: "1784"
+        contactName: "จิตอาสาหมู่ 2", phone: "1784"
+      },
+      {
+        id: "sample_3",
+        type: "passable",
+        title: "ถนนเลียบแม่น้ำ ต.บางหลวง อ.สรรพยา",
+        desc: "น้ำเอ่อล้นคันกั้นน้ำเล็กน้อย 10 ซม. ผิวจราจรเปียก ยังสัญจรได้",
+        travelStatus: "🟢 สัญจรผ่านได้ด้วยความระมัดระวัง 🚗✓",
+        badgeClass: "bg-emerald-100 text-emerald-800 border-emerald-300",
+        mediaType: "image",
+        mediaUrl: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=600&q=80",
+        lat: 15.1580, lng: 100.2250,
+        contactName: "ทีมเฝ้าระวังน้ำ", phone: "1784"
+      },
+      {
+        id: "sample_4",
+        type: "patient",
+        title: "บ้านยายสมบูรณ์ ซอย 4 ต.ตลุก (ต้องการเรือย้ายด่วน)",
+        desc: "ผู้ป่วยติดเตียงติดอยู่ชั้นล่าง น้ำเริ่มแตะระดับพื้นบ้าน ต้องการความช่วยเหลือ",
+        travelStatus: "🚨 รถเข้าไม่ถึง ต้องการเรือท้องแบนกู้ชีพ",
+        badgeClass: "bg-purple-100 text-purple-800 border-purple-300",
+        mediaType: "image",
+        mediaUrl: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80",
+        lat: 15.1180, lng: 100.2600,
+        contactName: "ญาติผู้ป่วย", phone: "1669"
       }
     ];
 
-    initialHazardPoints.forEach(p => renderCustomMarker(p));
+    presetFloodReports.forEach(r => renderReportMarker(r));
 
-    // ฟังก์ชันสร้างหมุดสัญลักษณ์ภาพขนาดใหญ่ แสดงสถานะถนนชัดเจน
-    function renderCustomMarker(data) {
-      if (activeMarkers[data.id]) return;
-
-      let iconHtml = '';
-      let targetLayer = blockedLayer;
-      let statusBadge = '';
+    function renderReportMarker(data) {
+      let iconHtml = '', targetLayer = blockedLayer;
 
       if (data.type === 'blocked') {
         iconHtml = `<div class="icon-badge bg-red-600 text-white w-10 h-10 text-lg">⛔</div>`;
         targetLayer = blockedLayer;
-        statusBadge = `<div class="bg-red-100 border border-red-300 text-red-800 text-xs font-bold px-2 py-1 rounded-lg mb-1.5 flex items-center gap-1">⛔ ถนนขาด / น้ำท่วมสูง ห้ามผ่าน</div>`;
-      } else if (data.type === 'passable') {
+      } else if (data.type === 'caution') {
         iconHtml = `<div class="icon-badge bg-amber-500 text-slate-950 w-10 h-10 text-lg">⚠️</div>`;
+        targetLayer = cautionLayer;
+      } else if (data.type === 'passable') {
+        iconHtml = `<div class="icon-badge bg-emerald-600 text-white w-10 h-10 text-lg">🟢</div>`;
         targetLayer = passableLayer;
-        statusBadge = `<div class="bg-amber-100 border border-amber-300 text-amber-800 text-xs font-bold px-2 py-1 rounded-lg mb-1.5 flex items-center gap-1">⚠️ รถเล็กห้ามผ่าน (รถยกสูงผ่านได้)</div>`;
-      } else if (data.type === 'patient') {
+      } else {
         iconHtml = `<div class="icon-badge bg-purple-600 text-white w-10 h-10 text-lg">🛏️</div>`;
         targetLayer = patientLayer;
-        statusBadge = `<div class="bg-purple-100 border border-purple-300 text-purple-800 text-xs font-bold px-2 py-1 rounded-lg mb-1.5 flex items-center gap-1">🚨 ขอความช่วยเหลือ: ผู้ป่วยติดเตียง</div>`;
-      } else {
-        iconHtml = `<div class="icon-badge bg-blue-600 text-white w-9 h-9 text-base">🅿️</div>`;
-        targetLayer = parkingLayer;
-        statusBadge = `<div class="bg-blue-100 border border-blue-300 text-blue-800 text-xs font-bold px-2 py-1 rounded-lg mb-1.5 flex items-center gap-1">🅿️ จุดเปิดรับฝากรถหนีน้ำ</div>`;
       }
 
       const marker = L.marker([data.lat, data.lng], {
         icon: L.divIcon({ className: 'custom-icon', html: iconHtml, iconSize: [40, 40], iconAnchor: [20, 20] })
       }).addTo(targetLayer);
 
-      activeMarkers[data.id] = { marker: marker, layer: targetLayer };
-
-      // รูปภาพหน้างาน (คลิกขยายดูเต็มจอได้)
-      let imageHtml = data.photo ? `
-        <div class="mt-2 rounded-xl overflow-hidden border border-slate-300 shadow cursor-pointer" onclick="zoomImage('${data.photo}')">
-          <img src="${data.photo}" class="w-full h-32 object-cover">
-          <span class="block text-[10px] text-center bg-slate-800 text-white py-0.5">🔍 แตะที่รูปเพื่อดูภาพใหญ่</span>
-        </div>
-      ` : '';
+      // รองรับทั้งรูปภาพและคลิปวิดีโอ
+      let mediaHtml = '';
+      if (data.mediaType === 'image' && data.mediaUrl) {
+        mediaHtml = `
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-300 shadow cursor-pointer" onclick="zoomImage('${data.mediaUrl}')">
+            <img src="${data.mediaUrl}" class="w-full h-32 object-cover">
+            <span class="block text-[10px] text-center bg-slate-800 text-white py-0.5">🔍 แตะดูรูปภาพขนาดใหญ่</span>
+          </div>`;
+      } else if (data.mediaType === 'video' && data.mediaUrl) {
+        mediaHtml = `
+          <div class="mt-2 rounded-xl overflow-hidden border border-slate-300 shadow bg-black">
+            <video src="${data.mediaUrl}" controls class="w-full h-36 object-cover"></video>
+            <span class="block text-[10px] text-center bg-slate-800 text-cyan-300 py-0.5">▶ แตะเล่นคลิปวิดีโอหน้างาน</span>
+          </div>`;
+      }
 
       marker.bindPopup(`
-        <div class="p-1.5 text-slate-900 font-sans max-w-[220px]">
-          ${statusBadge}
+        <div class="p-1.5 text-slate-900 font-sans max-w-[230px]">
+          <div class="${data.badgeClass || 'bg-slate-100 text-slate-800'} border text-xs font-bold px-2 py-1 rounded-lg mb-1.5 text-center">
+            ${data.travelStatus}
+          </div>
           <b class="block text-sm font-bold text-slate-900 leading-tight">${data.title}</b>
-          ${data.desc ? `<p class="text-xs text-slate-700 mt-1">${data.desc}</p>` : ''}
-          ${imageHtml}
+          <p class="text-xs text-slate-700 mt-1">${data.desc}</p>
+          ${mediaHtml}
           <div class="mt-2 pt-1 border-t border-slate-200 text-xs text-slate-600">ผู้แจ้ง: <b>${data.contactName}</b></div>
           <a href="tel:${data.phone}" style="color: #ffffff !important; text-decoration: none;" class="inline-flex items-center justify-center gap-1 w-full text-center mt-2 bg-red-600 hover:bg-red-700 active:bg-red-800 font-bold px-3 py-2 rounded-xl text-xs shadow transition">
             📞 โทรติดต่อ: ${data.phone}
@@ -366,28 +339,52 @@
       `);
     }
 
-    // ฟังก์ชันย่อ-ขยายรูปภาพ
-    function previewImage(event) {
+    // ฟังก์ชันพรีวิวทั้งรูปจากอัลบั้มและคลิปวิดีโอ
+    function previewMedia(event) {
       const file = event.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          let width = img.width, height = img.height, maxDim = 500;
-          if (width > height && width > maxDim) { height = Math.round((height * maxDim) / width); width = maxDim; }
-          else if (height > maxDim) { width = Math.round((width * maxDim) / height); height = maxDim; }
-          canvas.width = width; canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-          base64PhotoString = canvas.toDataURL('image/jpeg', 0.65);
-          document.getElementById('photo-preview').src = base64PhotoString;
-          document.getElementById('photo-preview-box').classList.remove('hidden');
+
+      const imgBox = document.getElementById('photo-preview');
+      const videoBox = document.getElementById('video-preview');
+      const container = document.getElementById('media-preview-box');
+
+      container.classList.remove('hidden');
+
+      if (file.type.startsWith('image/')) {
+        uploadedMediaType = 'image';
+        videoBox.classList.add('hidden');
+        imgBox.classList.remove('hidden');
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            let width = img.width, height = img.height, maxDim = 500;
+            if (width > height && width > maxDim) { height = Math.round((height * maxDim) / width); width = maxDim; }
+            else if (height > maxDim) { width = Math.round((width * maxDim) / height); height = maxDim; }
+            canvas.width = width; canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            base64MediaString = canvas.toDataURL('image/jpeg', 0.65);
+            imgBox.src = base64MediaString;
+          };
+          img.src = e.target.result;
         };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+
+      } else if (file.type.startsWith('video/')) {
+        uploadedMediaType = 'video';
+        imgBox.classList.add('hidden');
+        videoBox.classList.remove('hidden');
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          base64MediaString = e.target.result;
+          videoBox.src = base64MediaString;
+        };
+        reader.readAsDataURL(file);
+      }
     }
 
     function zoomImage(src) {
@@ -396,56 +393,12 @@
     }
     function closeImageModal() { document.getElementById('imageModal').classList.add('hidden'); }
 
-    function getFormLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          document.getElementById('pin-coords').value = `${pos.coords.latitude.toFixed(5)}, ${pos.coords.longitude.toFixed(5)}`;
-        }, () => alert("ไม่สามารถดึง GPS ได้ กรุณาแตะเลือกบนแผนที่แทนนะคะ"));
-      }
-    }
-
-    map.on('click', function(e) {
-      document.getElementById('pin-coords').value = `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
-      openSosModal();
-    });
-
-    function submitPin(e) {
-      e.preventDefault();
-      let coordsVal = document.getElementById('pin-coords').value;
-      if (!coordsVal) {
-        // ถ้าชาวบ้านไม่ได้กดดึง GPS ให้ดึงพิกัดกึ่งกลางแผนที่ให้อัตโนมัติเลย (ไม่ต้องให้กรอกยาก)
-        const center = map.getCenter();
-        coordsVal = `${center.lat.toFixed(5)}, ${center.lng.toFixed(5)}`;
-      }
-      const [lat, lng] = coordsVal.split(',').map(s => parseFloat(s.trim()));
-      const type = document.querySelector('input[name="pinType"]:checked').value;
-
-      const pinData = {
-        id: 'pin_' + Date.now(),
-        action: 'create',
-        lat: lat, lng: lng, type: type,
-        title: document.getElementById('pin-title').value,
-        contactName: document.getElementById('pin-contact-name').value,
-        phone: document.getElementById('pin-phone').value,
-        photo: base64PhotoString
-      };
-
-      renderCustomMarker(pinData);
-      map.setView([lat, lng], 14);
-
-      try {
-        fetch('https://ntfy.sh/chainat_flood_live_stream_2026', { method: 'POST', body: JSON.stringify(pinData) });
-      } catch (err) {}
-
-      alert("แชร์ข้อมูล & รูปภาพเรียบร้อยแล้วค่ะ! ขอบคุณที่ช่วยแจ้งเตือนเพื่อนบ้านนะคะ");
-      closeSosModal();
-      document.getElementById('sosForm').reset();
-      document.getElementById('photo-preview-box').classList.add('hidden');
-      base64PhotoString = '';
-    }
-
     function openSosModal() {
-      getFormLocation(); // เปิดปุ๊บ พยายามดึง GPS ทันทีเพื่ออำนวยความสะดวก
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(p => {
+          document.getElementById('pin-coords').value = `${p.coords.latitude.toFixed(5)}, ${p.coords.longitude.toFixed(5)}`;
+        });
+      }
       document.getElementById('sosModal').classList.remove('hidden');
     }
     function closeSosModal() { document.getElementById('sosModal').classList.add('hidden'); }
@@ -460,25 +413,77 @@
       }
     }
 
+    map.on('click', function(e) {
+      document.getElementById('pin-coords').value = `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
+      openSosModal();
+    });
+
+    function submitPin(e) {
+      e.preventDefault();
+      let coords = document.getElementById('pin-coords').value;
+      if (!coords) {
+        const center = map.getCenter();
+        coords = `${center.lat.toFixed(5)}, ${center.lng.toFixed(5)}`;
+      }
+      const [lat, lng] = coords.split(',').map(s => parseFloat(s.trim()));
+      const type = document.querySelector('input[name="pinType"]:checked').value;
+      const title = document.getElementById('pin-title').value;
+
+      let travelStatus = "⛔ เดินทางไม่ได้เด็ดขาด ❌ (ถนนตัดขาด)";
+      let badgeClass = "bg-red-100 text-red-800 border-red-300";
+      if (type === 'caution') {
+        travelStatus = "⚠️ รถเล็กห้ามผ่าน 🚗❌ (กระบะยกสูงผ่านได้)";
+        badgeClass = "bg-amber-100 text-amber-800 border-amber-300";
+      } else if (type === 'passable') {
+        travelStatus = "🟢 สัญจรผ่านได้ด้วยความระมัดระวัง 🚗✓";
+        badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+      } else if (type === 'patient') {
+        travelStatus = "🚨 รถเข้าไม่ถึง ต้องการเรือช่วยเหลือด่วน";
+        badgeClass = "bg-purple-100 text-purple-800 border-purple-300";
+      }
+
+      const newReport = {
+        id: 'user_' + Date.now(),
+        type: type,
+        title: title,
+        desc: "รายงานสดจากประชาชนในพื้นที่",
+        travelStatus: travelStatus,
+        badgeClass: badgeClass,
+        mediaType: uploadedMediaType,
+        mediaUrl: base64MediaString,
+        lat: lat, lng: lng,
+        contactName: document.getElementById('pin-contact-name').value,
+        phone: document.getElementById('pin-phone').value
+      };
+
+      renderReportMarker(newReport);
+      map.setView([lat, lng], 14);
+
+      alert("ส่งข้อมูลภาพ/วิดีโอขึ้นแผนที่เรียบร้อยแล้วค่ะ!");
+      closeSosModal();
+      document.getElementById('sosForm').reset();
+      document.getElementById('media-preview-box').classList.add('hidden');
+      base64MediaString = '';
+      uploadedMediaType = '';
+    }
+
     function filterLayer(type) {
-      ['all', 'blocked', 'passable', 'cctv', 'patient', 'parking'].forEach(id => {
+      ['all', 'blocked', 'caution', 'passable', 'patient'].forEach(id => {
         const btn = document.getElementById('btn-' + id);
         if (btn) btn.className = "px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800/90 text-slate-300 border border-slate-700 shadow whitespace-nowrap";
       });
       document.getElementById('btn-' + type).className = "px-3 py-1.5 rounded-full text-xs font-bold bg-blue-600 text-white shadow whitespace-nowrap";
 
       if (type === 'all') {
-        map.addLayer(blockedLayer); map.addLayer(passableLayer); map.addLayer(cctvLayer); map.addLayer(patientLayer); map.addLayer(parkingLayer);
+        map.addLayer(blockedLayer); map.addLayer(cautionLayer); map.addLayer(passableLayer); map.addLayer(patientLayer);
       } else if (type === 'blocked') {
-        map.addLayer(blockedLayer); map.removeLayer(passableLayer); map.removeLayer(cctvLayer); map.removeLayer(patientLayer); map.removeLayer(parkingLayer);
+        map.addLayer(blockedLayer); map.removeLayer(cautionLayer); map.removeLayer(passableLayer); map.removeLayer(patientLayer);
+      } else if (type === 'caution') {
+        map.removeLayer(blockedLayer); map.addLayer(cautionLayer); map.removeLayer(passableLayer); map.removeLayer(patientLayer);
       } else if (type === 'passable') {
-        map.removeLayer(blockedLayer); map.addLayer(passableLayer); map.removeLayer(cctvLayer); map.removeLayer(patientLayer); map.removeLayer(parkingLayer);
-      } else if (type === 'cctv') {
-        map.removeLayer(blockedLayer); map.removeLayer(passableLayer); map.addLayer(cctvLayer); map.removeLayer(patientLayer); map.removeLayer(parkingLayer);
+        map.removeLayer(blockedLayer); map.removeLayer(cautionLayer); map.addLayer(passableLayer); map.removeLayer(patientLayer);
       } else if (type === 'patient') {
-        map.removeLayer(blockedLayer); map.removeLayer(passableLayer); map.removeLayer(cctvLayer); map.addLayer(patientLayer); map.removeLayer(parkingLayer);
-      } else if (type === 'parking') {
-        map.removeLayer(blockedLayer); map.removeLayer(passableLayer); map.removeLayer(cctvLayer); map.removeLayer(patientLayer); map.addLayer(parkingLayer);
+        map.removeLayer(blockedLayer); map.removeLayer(cautionLayer); map.removeLayer(passableLayer); map.addLayer(patientLayer);
       }
     }
   </script>
